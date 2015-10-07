@@ -10,10 +10,20 @@
     <meta name="HandheldFriendly" content="True" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="shortcut icon" href="//wesamhaboush.github.io/themes/Casper/favicon.ico">
+    <link rel="shortcut icon" href="//wesamhaboush.github.io/themes/ichi/favicon.ico">
 
-    <link rel="stylesheet" type="text/css" href="//wesamhaboush.github.io/themes/Casper/assets/css/screen.css?v=1.0.0" />
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <script type="text/javascript" src="//wesamhaboush.github.io/themes/ichi/assets/js/vendor/fastclick.js?v=1.0.0"></script>
+    <script type="text/javascript" src="//wesamhaboush.github.io/themes/ichi/assets/js/vendor/modernizr.js?v=1.0.0"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="//wesamhaboush.github.io/themes/ichi/assets/css/normalize.css?v=1.0.0" />
+    <link rel="stylesheet" type="text/css" href="//wesamhaboush.github.io/themes/ichi/assets/css/foundation.min.css?v=1.0.0" />
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" type="text/css" href="//wesamhaboush.github.io/themes/ichi/assets/css/outdatedBrowser.min.css?v=1.0.0">
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="//wesamhaboush.github.io/themes/ichi/assets/fonts/foundation-icons/foundation-icons.css?v=1.0.0" />
+    <link rel="stylesheet" type="text/css" href="//wesamhaboush.github.io/themes/ichi/assets/css/styles.css?v=1.0.0" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans:300,700,400|Source+Sans+Pro:300,400,600,700,900,300italic,400italic,600italic,700italic,900italic" />
 
     <link rel="canonical" href="https://wesamhaboush.github.io/2015/10/06/CopyPaste-safe-Loggers.html" />
     
@@ -23,7 +33,7 @@
     <meta property="og:description" content="Developers commonly create loggers for classes by copying logger creation lines from other classes. The process is so repetitive and error-prone that often they forget to update the line to reflect the actual class where the statement was pasted. This..." />
     <meta property="og:url" content="https://wesamhaboush.github.io/2015/10/06/CopyPaste-safe-Loggers.html" />
     <meta property="article:published_time" content="2015-10-06T07:00:00.000Z" />
-    <meta property="article:modified_time" content="2015-10-07T03:50:46.190Z" />
+    <meta property="article:modified_time" content="2015-10-07T03:52:19.939Z" />
     
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Copy/Paste-safe Loggers" />
@@ -45,7 +55,7 @@
     "headline": "Copy/Paste-safe Loggers",
     "url": "https://wesamhaboush.github.io/2015/10/06/CopyPaste-safe-Loggers.html",
     "datePublished": "2015-10-06T07:00:00.000Z",
-    "dateModified": "2015-10-07T03:50:46.190Z",
+    "dateModified": "2015-10-07T03:52:19.939Z",
     "description": "Developers commonly create loggers for classes by copying logger creation lines from other classes. The process is so repetitive and error-prone that often they forget to update the line to reflect the actual class where the statement was pasted. This..."
 }
     </script>
@@ -56,29 +66,83 @@
 </head>
 <body class="post-template">
 
-    
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdate" href="http://outdatedbrowser.com/">Update my browser now</a></p>
+</div>
 
+<nav class="top-bar hide-for-large-up" data-topbar >
+  <ul class="title-area">
+    <li class="name">
 
-<header class="main-header post-head no-cover">
-    <nav class="main-nav  clearfix">
-        <a class="back-button icon-arrow-left" href="https://wesamhaboush.github.io">Home</a>
-        <!-- <a class="subscribe-button icon-feed" href="https://wesamhaboush.github.io/rss/">Subscribe</a> -->
+    </li>
+    <li class="home"><a class="fi-home" href="https://wesamhaboush.github.io"></a></li>
+    <li class="toggle-topbar"><a href="#" id="trigger-overlay" class="fi-list"></a></li>
+  </ul>
+
+<div class="overlay overlay-scale">
+    <button type="button" class="overlay-close">Close</button>
+    <nav>
+        <ul>
+            <li><a href="https://wesamhaboush.github.io">Home</a></li>
+        </ul>
     </nav>
+</div>
+
+</nav>
+
+<div class="row">
+
+<div class="small-16 medium-16 large-4 columns right head-area" >
+
+<header class="site-head">
+    <div class="vertical">
+        <div class="site-head-content inner">
+            <ul class="side-nav blog-menu show-for-large-up">
+                <li><a class="fi-home" href="https://wesamhaboush.github.io"></a></li>
+                <li><a class="fi-torso" href="https://wesamhaboush.github.io/about"></a></li>
+                <li><a class="fi-mail" href="https://wesamhaboush.github.io/contact"></a></li>
+            </ul>
+            
+            <h1 class="blog-title">Software is Artistic Science</h1>
+            <hr>
+            <p class="blog-description"></p>
+            <div class="blog-network">
+<!--                 <a href="#" class="fi-social-pinterest"></a>
+                <a href="#" class="fi-social-linkedin"></a>
+                <a href="#" class="fi-social-behance"></a>
+                <a href="#" class="fi-social-deviant-art"></a>
+                <a href="#" class="fi-social-dribbble"></a>
+                <a href="#" class="fi-social-flickr"></a>
+                <a href="#" class="fi-social-github"></a>
+                <a href="#" class="fi-social-skype"></a>
+                <a href="#" class="fi-social-snapchat"></a>
+                <a href="#" class="fi-social-steam"></a>
+                <a href="#" class="fi-social-xbox"></a>
+                <a href="#" class="fi-social-reddit"></a> -->
+                  <a href="https://github.com/wesamhaboush" class="fi-social-github"></a>
+            </div>
+        </div>
+    </div>
 </header>
+
+</div>
+
+
+<div class="small-16 medium-16 large-12 columns main-column left">
+    
 
 <main class="content" role="main">
 
     <article class="post">
 
-        <header class="post-header">
-            <h1 class="post-title">Copy/Paste-safe Loggers</h1>
-            <section class="post-meta">
-                <time class="post-date" datetime="2015-10-06">06 October 2015</time> 
-            </section>
-        </header>
 
-        <section class="post-content">
-            <div id="preamble">
+            <h1 class="post-title">Copy/Paste-safe Loggers</h1>
+
+            <span class="post-meta label"><time datetime="2015-10-06">06 Oct 2015</time></span>
+
+            <section class="post-content">
+                <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>Developers commonly create loggers for classes by copying logger creation lines from other classes. The process is so repetitive and error-prone that often they forget to update the line to reflect the actual class where the statement was pasted. This is compounded by the fact that IDEs normally auto-import the foreign class. We all saw classes that had the wrong logger like this:</p>
@@ -221,43 +285,47 @@ public class Classes {
 </div>
 </div>
 </div>
-        </section>
-
-        <footer class="post-footer">
-
-
-            <figure class="author-image">
-                <a class="img" href="" style="background-image: url(https://avatars.githubusercontent.com/u/1745580?v=3)"><span class="hidden">Wesam Haboush's Picture</span></a>
-            </figure>
-
-            <section class="author">
-                <h4><a href="">Wesam Haboush</a></h4>
-
-                    <p>Read <a href="">more posts</a> by this author.</p>
-                <div class="author-meta">
-                    
-                    
-                </div>
+                        <aside class="tags fi-pricetag-multiple">No tag</aside>
             </section>
+            <hr>
+            <footer class="post-footer">
+
+                <section class="share">
+                    <h4>Liked this post ? Share it.</h4>
+                    <a class="fi-social-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://wesamhaboush.github.io/2015/10/06/CopyPaste-safe-Loggers.html"
+                        onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    </a>
+                    <a class="fi-social-twitter" href="https://twitter.com/share?text=Copy%2FPaste-safe%20Loggers&amp;url=https://wesamhaboush.github.io/2015/10/06/CopyPaste-safe-Loggers.html"
+                        onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    </a>
+                    <a class="fi-social-google-plus" href="https://plus.google.com/share?url=https://wesamhaboush.github.io/2015/10/06/CopyPaste-safe-Loggers.html"
+                       onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    </a>
+                </section>
+
+                <section class="author">
+                    <header>
+                        <span>About the author</span>
+                    </header>
+                    <section>
+                        <h4>Wesam Haboush</h4>
+                        <img src="https://avatars.githubusercontent.com/u/1745580?v=3">
+                        
+                        
+                    </section>
+                    <footer>
+                         <p></p>
+                    </footer>
+                </section>
+
+        <div class="clearfix"></div>
+                    <hr>
+
+            </footer>
+
+        <h3 class="title-disqus"><span class="fi-comments"></span>Discussions</h3>
 
 
-            <section class="share">
-                <h4>Share this post</h4>
-                <a class="icon-twitter" href="https://twitter.com/share?text=Copy%2FPaste-safe%20Loggers&amp;url=https://wesamhaboush.github.io/2015/10/06/CopyPaste-safe-Loggers.html"
-                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
-                    <span class="hidden">Twitter</span>
-                </a>
-                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://wesamhaboush.github.io/2015/10/06/CopyPaste-safe-Loggers.html"
-                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
-                    <span class="hidden">Facebook</span>
-                </a>
-                <a class="icon-google-plus" href="https://plus.google.com/share?url=https://wesamhaboush.github.io/2015/10/06/CopyPaste-safe-Loggers.html"
-                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
-                    <span class="hidden">Google+</span>
-                </a>
-            </section>
-
-        </footer>
 
 
         <section class="post-comments">
@@ -280,12 +348,9 @@ public class Classes {
 
 </main>
 
+</div>
 
-
-    <footer class="site-footer clearfix">
-        <section class="copyright"><a href="https://wesamhaboush.github.io">Software is Artistic Science</a> &copy; 2015</section>
-        <section class="poweredby">Proudly published with <a href="http://hubpress.io">HubPress</a></section>
-    </footer>
+</div>
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
       <script type="text/javascript">
@@ -300,8 +365,14 @@ public class Classes {
         hljs.initHighlightingOnLoad();      
       </script>
 
-    <script type="text/javascript" src="//wesamhaboush.github.io/themes/Casper/assets/js/jquery.fitvids.js?v=1.0.0"></script>
-    <script type="text/javascript" src="//wesamhaboush.github.io/themes/Casper/assets/js/index.js?v=1.0.0"></script>
+    <!--[if lte IE 8]>
+        <script type="text/javascript" src="//wesamhaboush.github.io/themes/ichi/assets/js/outdatedBrowser.min.js?v=1.0.0"></script>
+    <![endif]-->
+    <script type="text/javascript" src="//wesamhaboush.github.io/themes/ichi/assets/js/min/built.js?v=1.0.0"></script>
+
+    <script>
+      $(document).foundation();
+    </script>
 
 </body>
 </html>
