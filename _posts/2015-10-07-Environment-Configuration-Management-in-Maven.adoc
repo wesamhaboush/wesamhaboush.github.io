@@ -81,3 +81,35 @@ Create an assembly descriptor for each environment, then associate each of these
 * Pros:
 
 ** Profiles are an integral part of maven: no need to introduce new technologies, languages, tools, plugins, etc)
+
+=== Mechanism 4: Maven Modules
+
+Essentially create a module per environment, and deploy these. Then retrieve the config and its binary dependencies.
+
+* Cons:
+
+** Seems an overkill if you have many environments
+** Seems to unnecessarily separate configurations from the binaries that will use them. Essentially reversing the normal relationship
+** Difficult to maintain: you have to create a new module environment
+
+* Pros:
+
+** Matches Maven ‘phylosophy’
+** poms are really simple
+** works really well if you have only few environments
+
+=== Mechanism 5: Ant Flexibility From Within Maven
+
+Create an Ant build file that handles resources with its extremely flexible capabilities. Then ensure your pom is pointing to the write places to deploy these ant-produced config packages.
+
+* Cons:
+
+** Uses two build systems instead of one (ant + maven)
+** More difficult to maintain due to needing to keep ant and maven in sync
+
+* Pros:
+
+** very flexible
+** scales really well
+
+Works especially if you do not use maven for deployment.
