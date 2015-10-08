@@ -1,0 +1,47 @@
+Environment Configuration Management in Maven
+=============================================
+
+=== The Configuration Management Problem
+
+By default, maven produces artifacts that contain both the resources and the classes, binaries, and static resources.
+
+How to produce artifacts that can be deployed to multiple environments in maven?
+
+=== Potential Solutions
+
+The solutions we explore here work around a scenario that requires:
+
+* A generic mechanism that can be used across many services/apps/projects
+* The outputs of this configuration management scheme or mechanism is a set of packages, some for the binary artifacts (i.e. environment agnostic), and one or more for each environment we intend to deploy the application to.
+
+=== Mechanism 1 : Manual
+
+Create a configuration jar by replacing values manually then running some commands to jar the file. E.g.
+
+[source,bash]
+----
+# for replacement
+$ vim
+$ sed
+
+# for compressing
+$ jar cvf
+$ zip
+$ gzip
+
+# for deploying
+$ mvn deploy:deploy-file [some other params]
+$ curl [some other params]
+----
+
+* Cons:
+
+** does not scale
+** time consuming
+** error prone
+** non-repeatable
+
+* Pros:
+
+** should be considered in exceptional circumstances
+** very flexible
