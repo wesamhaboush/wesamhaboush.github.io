@@ -1,5 +1,8 @@
 = Environment Configuration Management in Maven
 
+:Author:    Wesam Haboush
+:Email:     wesam.haboush@gmail.com
+:Date:      2015-10-06
 
 === The Configuration Management Problem
 
