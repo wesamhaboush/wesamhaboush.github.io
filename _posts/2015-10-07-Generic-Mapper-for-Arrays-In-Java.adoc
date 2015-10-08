@@ -52,3 +52,42 @@ public interface Mapper<I,O> {
     O map(I i);
 }
 ----
+
+Here is also a test to show how you may use the mapper, and prove it works as expected. Note how the separation of concerns works. We defined the string to integer conversion/mapping as a separate code, then, we could apply it to an array.
+
+[source,java]
+----
+package uk.co.codebreeze.arraymapper;
+
+import static org.junit.Assert.*;
+
+import java.lang.reflect.Array;
+import org.junit.Test;
+
+public class ArrayMapperTest {
+
+    @Test
+    public void testMap() {
+        //given
+        final Mapper<String, Integer> string2Integer = new Mapper<String, Integer>() {
+            public Integer map(String i) {
+                return Integer.valueOf(i);
+            }
+        };
+
+        final String[] strings = new String[]{"1", "2", "4", "66"};
+
+        //when
+        final Mapper<String[], Integer[]> am = new ArrayMapper<String, Integer>(string2Integer, Integer.class);
+
+        //then
+        final Integer[] result = am.map(strings);
+        assertArrayEquals(new Integer[]{1, 2, 4, 66}, result);
+        assertFalse(Array.newInstance(Integer.class, 0).equals(Array.newInstance(Integer.class, 0)));
+        assertFalse(Array.newInstance(Integer.class, 1).equals(Array.newInstance(Integer.class, 1)));
+    }
+}
+----
+
+
+As always, constructive feedback is always welcome.
