@@ -1,5 +1,4 @@
-Generic Mapper for Arrays In Java
-=================================
+= Generic Mapper for Arrays In Java
 
 === What is a Mapper?
 
