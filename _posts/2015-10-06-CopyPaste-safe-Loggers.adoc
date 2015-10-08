@@ -16,7 +16,7 @@ public class X {
 
 In this post, I offer a solution that worked for me.
 
-== Target Scheme For Obtaining Loggers
+=== Target Scheme For Obtaining Loggers
 
 
 Ultimately, I would like to be able to do some thing like:
@@ -35,7 +35,7 @@ public class X {
 
 copying the above code will simply work without needing to change anything on this line! it is essentially copy/paste safe!
 
-== Implementation Details
+=== Implementation Details
 
 The main components of this implementation are:
 
@@ -103,7 +103,7 @@ public class Classes {
 }
 ----
 
-== Final Thoughts
+=== Final Thoughts
 
 I do not think this is the only or the best implementation. It is just an implementation that worked for me. I am sure many other engineers will be able to come up with other ideas.
 
