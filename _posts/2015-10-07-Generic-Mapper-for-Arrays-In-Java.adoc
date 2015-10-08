@@ -3,6 +3,7 @@
 :Author:    Wesam Haboush
 :Email:     wesam.haboush@gmail.com
 :Date:      2015-10-06
+:hp-tags:   java, functional programming, arrays, mappers
 
 === What is a Mapper?
 
