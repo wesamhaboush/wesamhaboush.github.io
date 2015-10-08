@@ -42,4 +42,13 @@ public class ArrayMapper<I,O> implements Mapper<I[], O[]> {
 }
 ----
 
-The following code is a supporting interface. The +Mapper implemented by both the single item mapper provided to the array mapper constructor above, and the generic array mapper itself:
+The following code is a supporting interface. The `Mapper` implemented by both the single item mapper provided to the array mapper constructor above, and the generic array mapper itself:
+
+[source,java]
+----
+package uk.co.codebreeze.arraymapper;
+
+public interface Mapper<I,O> {
+    O map(I i);
+}
+----
