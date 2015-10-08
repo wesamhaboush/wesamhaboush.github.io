@@ -64,3 +64,20 @@ Create a profile for each environment, where an ${env} variable is set to contro
 
 ** Profiles are an integral part of maven: no need to introduce new technologies, languages, tools, plugins, etc)
 ** Good for environments where build and deployments happen on the same environment for example
+
+=== Mechanism 3: Assembly Descriptor
+
+Create an assembly descriptor for each environment, then associate each of these descriptors in the pom with a filtering location. Link to example?
+
+* Cons:
+
+** Complex to configure
+** Difficult to maintain
+** Cannot produce all environments with single command
+** Poses many questions with regard to deployment
+** Produces a different artifact depending on the profile chosen, which goes against maven’s intended use of profiles.
+** Does not separate configuration from binaries (unless we even more complicate the pom)
+
+* Pros:
+
+** Profiles are an integral part of maven: no need to introduce new technologies, languages, tools, plugins, etc)
