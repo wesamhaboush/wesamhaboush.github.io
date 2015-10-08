@@ -45,3 +45,22 @@ $ curl [some other params]
 
 ** should be considered in exceptional circumstances
 ** very flexible
+
+
+=== Mechanism 2: Maven Profiles
+
+Create a profile for each environment, where an ${env} variable is set to control the filtering of resources. Link to example?
+
+* Cons:
+
+** Complex to configure
+** Difficult to maintain
+** Cannot produce all environments with single command
+** Poses many questions with regard to deployment
+** Produces a different artifact depending on the profile chosen, which goes against maven’s intended use of profiles.
+** Does not separate configuration from binaries (unless we complicate the pom even more)
+
+* Pros:
+
+** Profiles are an integral part of maven: no need to introduce new technologies, languages, tools, plugins, etc)
+** Good for environments where build and deployments happen on the same environment for example
