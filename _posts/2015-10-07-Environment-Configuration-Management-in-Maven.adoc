@@ -113,3 +113,94 @@ Create an Ant build file that handles resources with its extremely flexible capa
 ** scales really well
 
 Works especially if you do not use maven for deployment.
+
+=== Mechanism 6: Include All Properties and Self-Discover
+
+Include all resources within the main artifact, and make sure the self-discovers which property to use.
+
+* Cons:
+
+** Some organizations perceive risks
+** Deployer needs to know how to facilitate self discovery for the artifact (environment variable must be present for example)
+
+
+* Pros:
+
+** Really Simple, almost trivial
+** Works seemless in Maven
+
+=== Mechanism 7: Maven Classifiers
+
+In this method, the maven classifiers optional attribute is added to some jars in the jar goal. Each classifier would correspond to an environment.
+
+* Cons:
+
+** Not pretty configuration (towards the very verbose when you have many environments)
+** Not easy to maintain (given the verbosity to say the least)
+** Does not scale
+
+Pros:
+
+** Comes with vanilla Maven
+** Easy to manage for a small number of configuration variations
+
+=== Mechanism 8: A Specialist Plugin
+
+Write a plugin to do this job for you. Make sure it has a pattern that suits your needs and then follow it, allowing the plugin to do its work from that.
+
+* Cons:
+
+** Effort to write the code
+** Effort to maintain the code
+
+*Pros:
+
+** You can make the developer’s life really easy, so configuration becomes really simple
+** Really flexible
+** Really scalable
+** Fits maven’s ‘phylosophy’
+
+=== Mechanism 9: Configuration Service
+
+Have a service that is solely responsible for maintaining configurations. You binaries will have no configurations within it, but must retrieve all values from this configuration registry.
+
+* Cons:
+
+** Not all technologies/applications can be bootstrapped easily to even access the repository before some sort of local config is read.
+** It breaks the encapsulation of the code and its configurations (think unit tests, etc)
+** Creates a dependency between all services and the configuration service
+** Not necessarily the simplest design
+
+* Pros:
+
+** Centralizes property control
+** You can tell what is everything configured as querying this service rather than accessing file systems, etc.
+** Makes deploying binaries really easy
+
+Here is some sample code that may help you imagine how such service would be used in practice. In this code, the service is injected into the DAO and used by the DAO:
+
+[source,Java]
+----
+  public class LoanDao {
+      @Configurable
+       private final Configuration config;
+
+      public Loan get(final String id){
+         final ResultSet resultSet = connectTo(config.get("database.url"))
+                                                              .andRunSql(loanWithId(id));
+         return toLoan(resultSet);
+      }
+  }
+----
+  
+A type of solution that can be added to this section was mentioned to me by a dear colleague (Eduardo), and that was using LDAP implementations (Active Directory) as properties management system.
+  
+=== Final Notes
+
+* There is almost no right or wrong answer here. For simplicity, you may go for a non-scalable, yet really simple solution. If you need scalability, you might choose to do a more effort, more longevity solution, and so on.
+* Note that profiles can be combined with some of the solutions above to produce builds that produce the main artifact together with a single environment configuration. This works well for organizations that choose to build at deployment time. Something like, get the tag, checkout code, build code, stage binaries and config, then mirror into prod.
+* Unit test resources should be put in the standard src/test/resources folder, and should not ideally need to be filtered.
+* Integration Tests should also use some predefined resources, however, profiles are adequate to handle few variations catering for a handful of testing environments
+* There is complete code for some of the methods above projects on github. Modules, profiles, ant, all, specialist-plugin, and assembly descriptor are all included.
+
+Constructive feedback is welcome.
