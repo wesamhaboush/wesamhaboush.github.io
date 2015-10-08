@@ -1,0 +1,8 @@
+Generic Mapper for Arrays In Java
+=================================
+
+=== What is a Mapper?
+
+In functional programming, maps are used to apply a function to each element in a list and return the result list. For example, if you apply the function f(x) = x . x to the list [1, 2, 3], then you get the result list [1,4,9]. We will call a class that does this job in Java an Array or Collection Mapper.
+
+In more general terms, functions in the mathematical sense are mappers because they map from one space (input space or domain) to another (output space or domain). For more on the subject, see http://en.wikipedia.org/wiki/Map_%28higher-order_function%29[Higher Order Functions on Wiki].
