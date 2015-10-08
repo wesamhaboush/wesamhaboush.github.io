@@ -4,6 +4,9 @@
 :Author:    Wesam Haboush
 :Email:     wesam.haboush@gmail.com
 :Date:      2015-10-06
+:hp-tags:   java, logger, copy past safe logger, static logger, slf4j, log4j
+
+=== Loggers Problem
 
 Developers commonly create loggers for classes by copying logger creation lines from other classes. The process is so repetitive and error-prone that often they forget to update the line to reflect the actual class where the statement was pasted. This is compounded by the fact that IDEs normally auto-import the foreign class. We all saw classes that had the wrong logger like this:
 
