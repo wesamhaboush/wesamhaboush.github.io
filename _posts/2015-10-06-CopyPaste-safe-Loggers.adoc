@@ -1,5 +1,5 @@
-Copy/Paste-safe Loggers
-=======================
+= Copy/Paste-safe Loggers
+
 
 :Author:    Wesam Haboush
 :Email:     wesam.haboush@gmail.com
