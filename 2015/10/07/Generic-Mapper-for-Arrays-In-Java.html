@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <title>Generic Mapper for Arrays In Java</title>
+    <meta name="description" content="" />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="//wesamhaboush.github.io/themes/Roon/favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:400,700,400italic,700italic|Open+Sans:400italic,700italic,700,400">
+    <link rel="stylesheet" type="text/css" href="//wesamhaboush.github.io/themes/Roon/assets/css/screen.css?v=1.0.0" />
+
+    <link rel="canonical" href="https://wesamhaboush.github.io/2015/10/07/Generic-Mapper-for-Arrays-In-Java.html" />
+    
+    <meta property="og:site_name" content="Software is Artistic Science" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Generic Mapper for Arrays In Java" />
+    <meta property="og:description" content="What is a Mapper? In functional programming, maps are used to apply a function to each element in a list and return the result list. For example, if you apply the function f(x) = x . x to the list [1,..." />
+    <meta property="og:url" content="https://wesamhaboush.github.io/2015/10/07/Generic-Mapper-for-Arrays-In-Java.html" />
+    <meta property="article:published_time" content="2015-10-07T07:00:00.000Z" />
+    <meta property="article:modified_time" content="2015-10-08T01:59:06.217Z" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Generic Mapper for Arrays In Java" />
+    <meta name="twitter:description" content="What is a Mapper? In functional programming, maps are used to apply a function to each element in a list and return the result list. For example, if you apply the function f(x) = x . x to the list [1,..." />
+    <meta name="twitter:url" content="https://wesamhaboush.github.io/2015/10/07/Generic-Mapper-for-Arrays-In-Java.html" />
+    
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Article",
+    "publisher": "Software is Artistic Science",
+    "author": {
+        "@type": "Person",
+        "name": "Wesam Haboush",
+        "image": "https://avatars.githubusercontent.com/u/1745580?v=3",
+        "url": "undefined/author/undefined",
+        "sameAs": null
+    },
+    "headline": "Generic Mapper for Arrays In Java",
+    "url": "https://wesamhaboush.github.io/2015/10/07/Generic-Mapper-for-Arrays-In-Java.html",
+    "datePublished": "2015-10-07T07:00:00.000Z",
+    "dateModified": "2015-10-08T01:59:06.217Z",
+    "description": "What is a Mapper? In functional programming, maps are used to apply a function to each element in a list and return the result list. For example, if you apply the function f(x) = x . x to the list [1,..."
+}
+    </script>
+
+    <meta name="generator" content="Ghost ?" />
+    <link rel="alternate" type="application/rss+xml" title="Software is Artistic Science" href="https://wesamhaboush.github.io/rss" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
+</head>
+<body class="post-template  noimage">
+
+    
+
+
+    <article role="main" class="">
+        <header>
+            <a href="https://wesamhaboush.github.io" id="home_link">«</a>
+            <div class="meta"><time datetime="2015-10-07"><a href="/2015/10/07/Generic-Mapper-for-Arrays-In-Java.html">October 07, 2015</a></time> <span class="count" id="js-reading-time"></span></div>
+            <h1>Generic Mapper for Arrays In Java</h1>
+        </header>
+
+        <div class="text" id="js-post-content">
+            <div class="sect2">
+<h3 id="_what_is_a_mapper">What is a Mapper?</h3>
+<div class="paragraph">
+<p>In functional programming, maps are used to apply a function to each element in a list and return the result list. For example, if you apply the function f(x) = x . x to the list [1, 2, 3], then you get the result list [1,4,9]. We will call a class that does this job in Java an Array or Collection Mapper.</p>
+</div>
+<div class="paragraph">
+<p>In more general terms, functions in the mathematical sense are mappers because they map from one space (input space or domain) to another (output space or domain). For more on the subject, see <a href="http://en.wikipedia.org/wiki/Map_%28higher-order_function%29">Higher Order Functions on Wiki</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_arrays_lists_in_java">Arrays =~ Lists In Java</h3>
+<div class="paragraph">
+<p>In Java, arrays have list semantics, but they are not ‘List’s. They do not implement the List interface for example. Here, I present a mapper that will apply a function to all elements in an array, and return the array result.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_why_map_arrays">Why Map Arrays?</h3>
+<div class="paragraph">
+<p>It makes for a better code in terms of readability. It makes for a far more concise and terse coding structures. It also allows you to think more abstractly about what you are trying to apply on each element (without thinking about the loops), then at will decide to apply that to lists, arrays, sets, or whatever.</p>
+</div>
+<div class="paragraph">
+<p>So, first, here is the mapper that does the deed. The class takes the output class and a single item mapper:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">package uk.co.codebreeze.arraymapper;
+
+import java.lang.reflect.Array;
+
+public class ArrayMapper&lt;I,O&gt; implements Mapper&lt;I[], O[]&gt; {
+    private final Mapper&lt;I, O&gt; itemMapper;
+    private final Class oClass;
+
+    public ArrayMapper(final Mapper&lt;I,O&gt; itemMapper, final Class oClass){
+        this.itemMapper = itemMapper;
+        this.oClass = oClass;
+    }
+
+    public O[] map(final I[] input) {
+        O[] output = (O[]) Array.newInstance(oClass, input.length);
+        for(int i = 0; i &lt; input.length; i++){
+            output[i] = itemMapper.map(input[i]);
+        }
+        return output;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following code is a supporting interface. The <code>Mapper</code> implemented by both the single item mapper provided to the array mapper constructor above, and the generic array mapper itself:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">package uk.co.codebreeze.arraymapper;
+
+public interface Mapper&lt;I,O&gt; {
+    O map(I i);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here is also a test to show how you may use the mapper, and prove it works as expected. Note how the separation of concerns works. We defined the string to integer conversion/mapping as a separate code, then, we could apply it to an array.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">package uk.co.codebreeze.arraymapper;
+
+import static org.junit.Assert.*;
+
+import java.lang.reflect.Array;
+import org.junit.Test;
+
+public class ArrayMapperTest {
+
+    @Test
+    public void testMap() {
+        //given
+        final Mapper&lt;String, Integer&gt; string2Integer = new Mapper&lt;String, Integer&gt;() {
+            public Integer map(String i) {
+                return Integer.valueOf(i);
+            }
+        };
+
+        final String[] strings = new String[]{"1", "2", "4", "66"};
+
+        //when
+        final Mapper&lt;String[], Integer[]&gt; am = new ArrayMapper&lt;String, Integer&gt;(string2Integer, Integer.class);
+
+        //then
+        final Integer[] result = am.map(strings);
+        assertArrayEquals(new Integer[]{1, 2, 4, 66}, result);
+        assertFalse(Array.newInstance(Integer.class, 0).equals(Array.newInstance(Integer.class, 0)));
+        assertFalse(Array.newInstance(Integer.class, 1).equals(Array.newInstance(Integer.class, 1)));
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As always, constructive feedback is always welcome.</p>
+</div>
+</div>
+        </div>
+
+        <menu>
+            <a href="" id="btn_share" class="btn" title="Share">
+                <span aria-hidden="true" data-icon="S"></span>
+                <strong>Share</strong>
+            </a>
+            <a href="http://twitter.com/share?text=Generic%20Mapper%20for%20Arrays%20In%20Java&url=https://wesamhaboush.github.io/2015/10/07/Generic-Mapper-for-Arrays-In-Java.html" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;" id="btn_comment" class="btn" target="_blank">
+                <span aria-hidden="true" data-icon="C"></span> Comment on Twitter
+            </a>
+        </menu>
+
+
+        <footer class="post-footer" role="contentinfo">
+
+            <div class="vcard">
+                <!-- <a href="https://wesamhaboush.github.io/rss" id="btn_feed" class="btn" title="Feed" target="_blank">
+                    <span aria-hidden="true" data-icon=")"></span>
+                    <strong>Feed</strong>
+                </a> -->
+
+                <a href="" class="photo">
+                    <span style="background-image: url('https://avatars.githubusercontent.com/u/1745580?v=3');">
+                        <img src="https://avatars.githubusercontent.com/u/1745580?v=3" alt="Wesam Haboush">
+                    </span>
+                </a>
+
+                <div class="details">
+                    <h4><a href="" class="url n">Wesam Haboush</a></h4>
+                    
+                    
+                </div>
+            </div>
+
+            <div id="user_bio">
+                <div class="inner">
+                    
+                </div>
+            </div>
+
+        </footer>
+
+
+
+
+    <section class="post-comments">
+      <div id="disqus_thread"></div>
+      <script type="text/javascript">
+      var disqus_shortname = 'wesam.haboush'; // required: replace example with your forum shortname
+      /* * * DON'T EDIT BELOW THIS LINE * * */
+      (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+      </script>
+      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </section>
+
+
+    </article>
+
+    <div id="share_modal">
+        <div class="wrap">
+            <div class="inner">
+                <header>
+                    Share
+                    <a href="" class="close" title="Close">&times;</a>
+                </header>
+
+                <div class="roon-share-links">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-dnt="true">Tweet</a>
+                    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+                    <div id="fb-elems">
+                        <div id="fb-root"></div>
+                        <script>(function(d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id)) return;
+                        js = d.createElement(s); js.id = id;
+                        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=463438580397968";
+                        fjs.parentNode.insertBefore(js, fjs);
+                        }(document, 'script', 'facebook-jssdk'));</script>
+                        <div class="fb-like" data-send="false" data-layout="button_count" data-width="110" data-show-faces="false" data-font="arial"></div>
+                    </div>
+
+                    <div id="pinit-btn">
+                        <a href="//pinterest.com/pin/create/button/?url=https://wesamhaboush.github.io/2015/10/07/Generic-Mapper-for-Arrays-In-Java.html&amp;description=Generic%20Mapper%20for%20Arrays%20In%20Java-Software%20is%20Artistic%20Science " data-pin-do="buttonPin" data-pin-config="beside"><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png"></a>
+                        <script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <script>
+
+            function get_text(el) {
+                ret = "";
+                var length = el.childNodes.length;
+                for(var i = 0; i < length; i++) {
+                    var node = el.childNodes[i];
+                    if(node.nodeType != 8) {
+                        ret += node.nodeType != 1 ? node.nodeValue : get_text(node);
+                    }
+                }
+                return ret;
+            }
+            function reading_time () {
+                var post_content = document.getElementById('js-post-content');
+                if (post_content) {
+                    var words = get_text(post_content),
+                        count = words.split(/\s+/).length,
+                        read_time = Math.ceil((count / 150)),
+                        read_time_node = document.createTextNode(read_time + ' min read');
+                    document.getElementById('js-reading-time').appendChild(read_time_node);
+                }
+            }
+
+        function no_schema_links () {
+            var links = document.querySelectorAll('.js-remove-domain-schema');
+            if (links) {
+                for (i = 0; i < links.length; ++i) {
+                    var link = links[i],
+                        text = link.innerHTML,
+                        no_schema = text.replace(/.*?:\/\//g, "");
+                    link.innerHTML = no_schema;
+                }
+            }
+        }
+
+        window.onload = function () {
+            no_schema_links();
+
+            reading_time();
+        }
+    </script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js?v="></script> <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js?v="></script> 
+      <script type="text/javascript">
+        jQuery( document ).ready(function() {
+          // change date with ago
+          jQuery('ago.ago').each(function(){
+            var element = jQuery(this).parent();
+            element.html( moment(element.text()).fromNow());
+          });
+        });
+
+        hljs.initHighlightingOnLoad();      
+      </script>
+
+        <script>
+            $(function(){
+                var share_modal = $("#share_modal"),
+                    update_social_links = true;
+
+                $("#btn_share").click(function(){
+                    var that = $(this);
+                    share_modal.fadeIn(200);
+                    return false;
+                });
+
+                share_modal.click(function(e){
+                    if (e.target.className == "wrap" || e.target.id == "share_modal") {
+                        share_modal.fadeOut(200);
+                    }
+                    return false;
+                });
+
+                share_modal.find("div.inner > header > a.close").click(function(){
+                    share_modal.fadeOut(200);
+                    return false;
+                });
+            });
+        </script>
+
+
+
+</body>
+</html>
