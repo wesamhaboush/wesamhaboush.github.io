@@ -32,14 +32,20 @@
     <meta property="og:site_name" content="Software is Artistic Science" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Copy/Paste-safe Loggers" />
-    <meta property="og:description" content="Developers commonly create loggers for classes by copying logger creation lines from other classes. The process is so repetitive and error-prone that often they forget to update the line to reflect the actual class where the statement was pasted. This..." />
+    <meta property="og:description" content="Loggers Problem Developers commonly create loggers for classes by copying logger creation lines from other classes. The process is so repetitive and error-prone that often they forget to update the line to reflect the actual class where the statement was..." />
     <meta property="og:url" content="https://wesamhaboush.github.io/2015/10/06/CopyPaste-safe-Loggers.html" />
     <meta property="article:published_time" content="2015-10-06T07:00:00.000Z" />
-    <meta property="article:modified_time" content="2015-10-08T03:07:11.566Z" />
+    <meta property="article:modified_time" content="2015-10-08T03:13:49.005Z" />
+    <meta property="article:tag" content="java" />
+    <meta property="article:tag" content="logger" />
+    <meta property="article:tag" content="copy past safe logger" />
+    <meta property="article:tag" content="static logger" />
+    <meta property="article:tag" content="slf4j" />
+    <meta property="article:tag" content="log4j" />
     
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Copy/Paste-safe Loggers" />
-    <meta name="twitter:description" content="Developers commonly create loggers for classes by copying logger creation lines from other classes. The process is so repetitive and error-prone that often they forget to update the line to reflect the actual class where the statement was pasted. This..." />
+    <meta name="twitter:description" content="Loggers Problem Developers commonly create loggers for classes by copying logger creation lines from other classes. The process is so repetitive and error-prone that often they forget to update the line to reflect the actual class where the statement was..." />
     <meta name="twitter:url" content="https://wesamhaboush.github.io/2015/10/06/CopyPaste-safe-Loggers.html" />
     
     <script type="application/ld+json">
@@ -57,8 +63,9 @@
     "headline": "Copy/Paste-safe Loggers",
     "url": "https://wesamhaboush.github.io/2015/10/06/CopyPaste-safe-Loggers.html",
     "datePublished": "2015-10-06T07:00:00.000Z",
-    "dateModified": "2015-10-08T03:07:11.566Z",
-    "description": "Developers commonly create loggers for classes by copying logger creation lines from other classes. The process is so repetitive and error-prone that often they forget to update the line to reflect the actual class where the statement was pasted. This..."
+    "dateModified": "2015-10-08T03:13:49.005Z",
+    "keywords": "java,  logger,  copy past safe logger,  static logger,  slf4j,  log4j",
+    "description": "Loggers Problem Developers commonly create loggers for classes by copying logger creation lines from other classes. The process is so repetitive and error-prone that often they forget to update the line to reflect the actual class where the statement was..."
 }
     </script>
 
@@ -67,7 +74,7 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/default.min.css">
 
 </head>
-<body class="post-template no-js">
+<body class="post-template tag-java tag-logger tag-copy-past-safe-logger tag-static-logger tag-slf4j tag-log4j no-js">
 
     <span class="mobile btn-mobile-menu">
         <i class="icon icon-list btn-mobile-menu__icon"></i>
@@ -144,15 +151,15 @@
 
     <header class="post-header">
       <div class="post-meta">
-        <time datetime="06 Oct 2015" class="post-meta__date date">06 Oct 2015</time> &#8226; <span class="post-meta__tags tags"></span>
+        <time datetime="06 Oct 2015" class="post-meta__date date">06 Oct 2015</time> &#8226; <span class="post-meta__tags tags">on <a href="https://wesamhaboush.github.io/tag/java">java</a>, <a href="https://wesamhaboush.github.io/tag/logger"> logger</a>, <a href="https://wesamhaboush.github.io/tag/copy-past-safe-logger"> copy past safe logger</a>, <a href="https://wesamhaboush.github.io/tag/static-logger"> static logger</a>, <a href="https://wesamhaboush.github.io/tag/slf4j"> slf4j</a>, <a href="https://wesamhaboush.github.io/tag/log4j"> log4j</a></span>
         <span class="post-meta__author author"><img src="https://avatars.githubusercontent.com/u/1745580?v=3" alt="profile image for Wesam Haboush" class="avatar post-meta__avatar" /> by Wesam Haboush</span>
       </div>
       <h1 class="post-title">Copy/Paste-safe Loggers</h1>
     </header>
 
-    <section class="post">
-      <div id="preamble">
-<div class="sectionbody">
+    <section class="post tag-java tag-logger tag-copy-past-safe-logger tag-static-logger tag-slf4j tag-log4j">
+      <div class="sect2">
+<h3 id="_loggers_problem">Loggers Problem</h3>
 <div class="paragraph">
 <p>Developers commonly create loggers for classes by copying logger creation lines from other classes. The process is so repetitive and error-prone that often they forget to update the line to reflect the actual class where the statement was pasted. This is compounded by the fact that IDEs normally auto-import the foreign class. We all saw classes that had the wrong logger like this:</p>
 </div>
@@ -165,7 +172,6 @@
 </div>
 <div class="paragraph">
 <p>In this post, I offer a solution that worked for me.</p>
-</div>
 </div>
 </div>
 <div class="sect2">
