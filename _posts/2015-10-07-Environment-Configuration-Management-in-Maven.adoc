@@ -7,7 +7,7 @@ By default, maven produces artifacts that contain both the resources and the cla
 
 How to produce artifacts that can be deployed to multiple environments in maven?
 
-Note, all code for this blog can be found at https://github.com/wesamhaboush/configuration-maven-plugin[configuration with maven examples]
+Note, all code for this blog can be found at https://github.com/wesamhaboush/configuration-maven-plugin[configuration with maven examples github repo]
 
 === Potential Solutions
 
