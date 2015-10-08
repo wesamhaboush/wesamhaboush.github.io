@@ -1,5 +1,5 @@
-Environment Configuration Management in Maven
-=============================================
+= Environment Configuration Management in Maven
+
 
 === The Configuration Management Problem
 
