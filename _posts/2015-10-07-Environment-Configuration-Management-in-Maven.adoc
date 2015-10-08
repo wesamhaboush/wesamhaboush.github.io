@@ -181,16 +181,17 @@ Here is some sample code that may help you imagine how such service would be use
 
 [source,Java]
 ----
-  public class LoanDao {
-      @Configurable
-       private final Configuration config;
-
-      public Loan get(final String id){
-         final ResultSet resultSet = connectTo(config.get("database.url"))
-                                                              .andRunSql(loanWithId(id));
-         return toLoan(resultSet);
-      }
+public class LoanDao 
+{
+  @Configurable
+  private final Configuration config;
+      
+  public Loan get(final String id)
+  {
+    final ResultSet resultSet = connectTo(config.get("database.url")).andRunSql(loanWithId(id));
+    return toLoan(resultSet);
   }
+}
 ----
   
 A type of solution that can be added to this section was mentioned to me by a dear colleague (Eduardo), and that was using LDAP implementations (Active Directory) as properties management system.
