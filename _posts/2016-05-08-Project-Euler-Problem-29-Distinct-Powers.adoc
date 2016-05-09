@@ -1,0 +1,13 @@
+= Project Euler Problem 29 : Distinct Powers
+
+:hp-tags: factorization, perfect powers, prime factorizations, distinct powers, euler project problem 29
+
+I have been lately playing with Project Euler, and I hit problem 29. I had no idea how to solve it to start with, but after much thinking, searching, reading, and learning, I made two solutions that are NOT brute force.
+
+=== The Storage Algorithm
+
+To start with, i tried to find a clever solution myself. After few days of trying, i started understanding that i need to simply find the number of bases and powers that are unique, and then remove the duplicates (extra equivalent ones). But how? go google!
+
+Google told me that everybody seem to give up and use the brute force solution. I am despaired. I do NOT like it. 
+
+After couple of nights and continuous thinking and more importantly someone mentioning represeting unmashable values as vectors of parameters, I thought about representing the unique numbers as ordered pairs.
