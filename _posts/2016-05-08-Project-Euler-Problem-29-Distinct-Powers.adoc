@@ -5,28 +5,28 @@
 
 I have been lately playing with Project Euler, and after few weeks, I hit problem 29. I had no idea how to solve it to start with, but after much thinking, searching, reading, and learning, I made two solutions that are NOT brute force.
 
-The problem statement can be found here: https://projecteuler.net/problem=29
+The problem statement can be found here: https://projecteuler.net/problem=29[Euler Project Problem 29]
 
-My understanding of the problem and the nature of the project is that we are trying to not use brute force solutions (even if they are feasible), but rather use the problem statements to learn about number theory, and other clever ways to optimize the O(n) of the problem to a minimum in terms of both time and space.
+My understanding of the problem and the nature of the project is that we are trying to not use brute force solutions (even if they are feasible), but rather use the problem statements to learn about number theory, and other clever ways to optimize the `O(n)` of the problem to a minimum in terms of both time and space.
 
-To start with, I tried to find a clever solution myself. After few days of trying, I started focusing on the basic solution strategy: simply find the number of bases and powers that are a unique combination, i.e. all unique (a,b) ordered pairs, and then remove the duplicates (extra equivalent ones). But how? go google-anza!
+To start with, I tried to find a clever solution myself. After few days of trying, I started focusing on the basic solution strategy: simply find the number of bases and powers that are a unique combination, i.e. all unique `(a,b)` ordered pairs, and then remove the duplicates (extra equivalent ones). But how? go google-anza!
 
 Google told me that everybody seem to give up and use the brute force solution. I am despaired. I do NOT like it. 
 
 
 === The Storage Algorithm
 
-After couple of nights and continuous thinking and more importantly someone mentioning represeting unmashable values as vectors of parameters - i.e. do not calculate 100^100, just deal with it as (100,100), I thought about representing the unique base-power combinations as ordered pairs.
+After couple of nights and continuous thinking and more importantly someone mentioning represeting unmashable values as vectors of parameters - i.e. do not calculate `100^100`, just deal with it as `(100,100)`, I thought about representing the unique base-power combinations as ordered pairs.
 
-I also understood from my research that all numbers can be simplified to a basic base and power combinations form. For example, 2^3 cannot be simplified any further, but 4^9 can be simplified into 2^18, also 9^10 to 3^20, etc. So those combinations are equivalent - e.g. (9,10) and (3,20).
+I also understood from my research that all numbers can be simplified to a basic base and power combinations form. For example, `2^3` cannot be simplified any further, but `4^9` can be simplified into `2^18`, also `9^10` to `3^20`, etc. So those combinations are equivalent or duplicates- e.g. `(9,10)` and `(3,20)`.
 
-Next, I learnt that there are two types of base a in the (a,b) combinations: 1) perfect powers 2) non-perfect powers. For non-perfect powers, they cannot be simplified any further. Non-perfect power are numbers that cannot be expressed as x^z, e.g. 6, 13, 18. On the other hand, perfect powers bases can be, e.g. 9 = 3^2, 1000 = 10^3, 64 = 4^4. How does this help? ok, so it turns out that combinations that are made of non-perfect power a's are non-decomposable or are irreduceable, i.e., we need not process them, just use them as is. For ordered pairs with perfect power as, you need to find x and y, where x^y = a.
+Next, I learnt that there are two types of base a in the `(a,b)` combinations: 1) perfect powers 2) non-perfect powers. For non-perfect powers, they cannot be simplified any further. Non-perfect power are numbers that cannot be expressed as `x^z`, e.g. `6`, `13`, `18`. On the other hand, perfect powers bases can be, e.g. `9 = 3^2`, `1000 = 10^3`, `64 = 4^4`. How does this help? ok, so it turns out that combinations that are made of non-perfect power a's are non-decomposable or are irreduceable, i.e., we need not process them, just use them as is. For ordered pairs with perfect power as, you need to find `x` and `y`, where `x^y = a`.
 
-Note, that perfect numbers are far inbetween, therefore processing them is not an O(n) situation. 
+Note, that perfect numbers are far inbetween, therefore processing them is not an `O(n)` situation. 
 
-So, the next step is storing all the unique items in a data structure. I decided to use a map of bases to their associated powers, instead of a set of ordered pairs, although both would work. The reason is that this will reduce storage space. So in stead of the memory holding: (2,2),(2,3),(2,4), it holds (2,(2,3,4)).
+So, the next step is storing all the unique items in a data structure. I decided to use a map of bases to their associated powers, instead of a set of ordered pairs, although both would work and effectively fulfill the `Set` semantics. The reason is that this will reduce storage space. So in stead of the memory holding: `(2,2),(2,3),(2,4)`, it holds `(2,(2,3,4))`.
 
-So, finally the high level algorithm works out O(n^2), however, we never have to calculate any large powers, and also this solution is generic and should work with larger values from those requested in Project Euler Problem 29.
+So, finally what is the complexity of the unique values storage algorithm? the high level algorithm works out `O(n^2)`, however, we never have to calculate any large powers, and also this solution is generic and should work with larger values from those requested in Project Euler Problem 29.
 
 Here is the pseudo code of the algorithm, followed by a java implementation:
 
@@ -42,7 +42,7 @@ Here is the pseudo code of the algorithm, followed by a java implementation:
                set = set + (base, power)
    return size-of set
 
-What we are trying to do here is to simplify every number to its base a^b, by finding out if a is perfect power, then finding the smallest base and updating the power accordingly, this way we can identify duplicates. For example:
+What we are trying to do here is to simplify every number to its base `a^b`, by finding out if a is perfect power, then finding the smallest base and updating the power accordingly, this way we can identify duplicates. For example:
 
     9^2 = (3^2)^2 = 3 ^ 4
     8^2 = (2^3)^2 = 2 ^ 6
