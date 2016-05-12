@@ -30,13 +30,25 @@ So, finally the high level algorithm works out O(n^2), however, we never have to
 
 Here is the pseudo code of the algorithm, followed by a java implementation:
 
+ distinct-powers(min, max)
+   set = []
+   for base in min to max
+       if base is perfect power
+           reduced-base, additional-power = reduce(base)
+           for power in min to max
+               set = set + (reduced-base, power * additional-power)
+       else
+           for power in min to max
+               set = set + (base, power)
+   return size-of set
 
-    what we are trying to do here is to simplify every number to its base a^b, by finding out if a is perfect power,
-    then finding the smallest base and updating the power accordingly, this way we can identify duplicates. For example:
+What we are trying to do here is to simplify every number to its base a^b, by finding out if a is perfect power, then finding the smallest base and updating the power accordingly, this way we can identify duplicates. For example:
+
     9^2 = (3^2)^2 = 3 ^ 4
     8^2 = (2^3)^2 = 2 ^ 6
     4^3 = (2^2)^3 = 2 ^ 6
-    you can see that the last two are duplicates, while we did not know that earlier!
+
+you can see that the last two are duplicates, while we did not know that earlier!
      
 
 [source,java]
