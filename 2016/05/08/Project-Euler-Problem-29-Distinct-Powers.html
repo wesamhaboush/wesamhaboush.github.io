@@ -30,10 +30,10 @@
     <meta property="og:site_name" content="Software is Artistic Science" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Project Euler Problem 29 : Distinct Powers" />
-    <meta property="og:description" content="I have been lately playing with Project Euler, and after few weeks, I hit problem 29. I had no idea how to solve it to start with, but after much thinking, searching, reading, and learning, I made two solutions that..." />
+    <meta property="og:description" content="Introduction I have been lately playing with Project Euler, and after few weeks, I hit problem 29. I had no idea how to solve it to start with, but after much thinking, searching, reading, and learning, I made two solutions..." />
     <meta property="og:url" content="https://wesamhaboush.github.io/2016/05/08/Project-Euler-Problem-29-Distinct-Powers.html" />
     <meta property="article:published_time" content="2016-05-08T07:00:00.000Z" />
-    <meta property="article:modified_time" content="2016-05-12T09:10:19.826Z" />
+    <meta property="article:modified_time" content="2016-05-12T10:08:47.377Z" />
     <meta property="article:tag" content="factorization" />
     <meta property="article:tag" content="perfect powers" />
     <meta property="article:tag" content="prime factorizations" />
@@ -42,7 +42,7 @@
     
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Project Euler Problem 29 : Distinct Powers" />
-    <meta name="twitter:description" content="I have been lately playing with Project Euler, and after few weeks, I hit problem 29. I had no idea how to solve it to start with, but after much thinking, searching, reading, and learning, I made two solutions that..." />
+    <meta name="twitter:description" content="Introduction I have been lately playing with Project Euler, and after few weeks, I hit problem 29. I had no idea how to solve it to start with, but after much thinking, searching, reading, and learning, I made two solutions..." />
     <meta name="twitter:url" content="https://wesamhaboush.github.io/2016/05/08/Project-Euler-Problem-29-Distinct-Powers.html" />
     
     <script type="application/ld+json">
@@ -60,9 +60,9 @@
     "headline": "Project Euler Problem 29 : Distinct Powers",
     "url": "https://wesamhaboush.github.io/2016/05/08/Project-Euler-Problem-29-Distinct-Powers.html",
     "datePublished": "2016-05-08T07:00:00.000Z",
-    "dateModified": "2016-05-12T09:10:19.826Z",
+    "dateModified": "2016-05-12T10:08:47.377Z",
     "keywords": "factorization,  perfect powers,  prime factorizations,  distinct powers,  euler project problem 29",
-    "description": "I have been lately playing with Project Euler, and after few weeks, I hit problem 29. I had no idea how to solve it to start with, but after much thinking, searching, reading, and learning, I made two solutions that..."
+    "description": "Introduction I have been lately playing with Project Euler, and after few weeks, I hit problem 29. I had no idea how to solve it to start with, but after much thinking, searching, reading, and learning, I made two solutions..."
 }
     </script>
 
@@ -148,8 +148,8 @@
             <span class="post-meta label"><time datetime="2016-05-08">08 May 2016</time></span>
 
             <section class="post-content">
-                <div id="preamble">
-<div class="sectionbody">
+                <div class="sect2">
+<h3 id="_introduction">Introduction</h3>
 <div class="paragraph">
 <p>I have been lately playing with Project Euler, and after few weeks, I hit problem 29. I had no idea how to solve it to start with, but after much thinking, searching, reading, and learning, I made two solutions that are NOT brute force.</p>
 </div>
@@ -164,7 +164,6 @@
 </div>
 <div class="paragraph">
 <p>Google told me that everybody seem to give up and use the brute force solution. I am despaired. I do NOT like it.</p>
-</div>
 </div>
 </div>
 <div class="sect2">
@@ -262,10 +261,112 @@
     }</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Finally, this code took less than 100ms to find the correct answer to euler&#8217;s problem 29.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_the_counting_algorithm">The Counting Algorithm</h3>
-
+<div class="paragraph">
+<p>Having produced the set solution above, I was fairly satisfied with a non brute force solution, but I still really was itching to get another solution strategy working. I wanted to be able to count and identify duplicates, without storing all the combinations. I have read on some threads that you can actually count the duplicates by hand, and give the answer to euler&#8217;s project. However, I felt I would like to be able to give a more generic solution, and computerize the process. I set out to do exactly that. It was not easy, but i think i got there.</p>
+</div>
+<div class="paragraph">
+<p>OK, so how do we count duplicates basically goes like that: we assume no duplicates, and find the number of all possible combinations <code>(min - max + 1)^2</code>, then we take out from that number, all the repeats that we identify by iterating through the combinations.</p>
+</div>
+<div class="paragraph">
+<p>Here is a pseudocode, followed by a java implementation too:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>distinct-powers(min, max)
+    max-count = square (max - min + 1)
+    repeat-count = 0
+    for base in min to max
+        if base is perfect power
+            reduced-base, additional-power = reduce(base)
+            for power in min to max
+                new-power = power * additional-power
+                if new-power &lt;= max
+                    repeat-count = repeat-count + 1
+                else
+                    x, y = find divisors of new-power such that x &lt; power and y between min and max
+                    if exist x, y
+                        repeat-count = repeat-count + 1
+     return max-count - repeat-count</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java">public static long calculateCounting(final long min, final long max)
+    {
+        long count = (max - min + 1) * (max - min + 1);
+        long repeats = 0;
+        for(long i = min; i &lt;= max; i++)
+        {
+            final Exponent perfectPower = findPerfectPower(i);
+            if (perfectPower == null) // non perfect powers add unique combinations, so just add them
+            {
+                //nothing to do, cz non perfect power cannot generate duplicates.
+            }
+            else
+            {
+                for(long j = min; j &lt; max; j++)
+                {
+                    final long reducedCandidateB = perfectPower.power * j;
+                    if(reducedCandidateB &lt;= max)
+                    {
+                        //this is the simple case of: a^b = c^d^e = c^(d*e), where d * e &lt; max
+                        //this is always a repeat with c^ whatever.
+                        repeats++;
+                    }
+                    else
+                    {
+                        //we want to find if this perfect power number i^j can be decomposed to another perfect power before it, focus on before it, i.e. a &lt; current a
+                        //if yes, then it is a repeat of that number. For example:
+                        //when min,max = 2,8   then 4^6 and 8^4 are equivalent, but neither are a repeat of 2^12, because 12 is greater than the max 8
+                        //so when we hit 4^6, it is decomposed into 2^2^6 = 2^12. Now, can we decompose it to a^b such that a &lt; 4, i.e. current a,
+                        //and with both b &lt; max and &gt; min? the answer is no (i tried and failed). so 4^6 is NOT a repeat.
+                        //however, once we hit 8^4 = 2^3^4 = 2^12, we ask the same question, can we find 8^4 = a^b, such that a &lt; 8 and &gt; min,
+                        // and b &lt; max and b &gt; min? the answer is yes. With 2^12, we can find divisors of 12 = 2, 3, 4, 6, 12, then try each as follows:
+                        // b = 12/12 = 1 =&gt; fails cz b is less than minimum
+                        // b = 12/6  = 2 =&gt; fails cz 6 is greater than 3 (the current decomposed power), which means it is not before it
+                        // b = 12/4 = 3  =&gt; fails cz 4 is greater than 3 (the current decomposed power), which means it is not before it
+                        // b = 12/3 = 4  =&gt; fails cz 3 is equal to 3 (the power we decomposed the current a, which is 8, to)
+                        // b = 12/2 = 6  =&gt; succeeds cz 2 is less than 3 (so the base is another base before the current base), AND 6, which is b, is &gt; min and &lt; max.
+                        // This indicates 8^4 is a repeat
+                        // so, let's implement that
+                        final Set&lt;Long&gt; candidateBDivisors = divisorsOf(reducedCandidateB, false, false);
+                        final boolean isRepeatOfSomethingNonBasicBefore = candidateBDivisors
+                                .stream()
+                                .filter(divisor -&gt; divisor &lt; perfectPower.power)
+                                .anyMatch(divisor -&gt; {
+                                    final long newB = reducedCandidateB / divisor;
+                                    return newB &gt;= min &amp;&amp; newB &lt;= max;
+                                });
+                        if(isRepeatOfSomethingNonBasicBefore)
+                        {
+                            repeats++;
+                        }
+                    }
+                }
+            }
+        }
+        return count - repeats;
+    }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This solution also gives the same results as the previous one, but does not use any memory at all, it does not compute any power values, and also runs in <code>O(n^2)</code> time complexity.</p>
+</div>
+<div class="paragraph">
+<p>I am more satisfied now having produced two non-brute force solutions, and having learnt so much about number theory that I did not know. Having said that, I cannot help but think, can we do better? can we do something with a <code>O(n)</code> time complexity? I am happy to be given pointers!</p>
+</div>
+<div class="paragraph">
+<p>Finally, here is a link to the code on my github account</p>
+</div>
+<div class="paragraph">
+<p><a href="https://raw.githubusercontent.com/wesamhaboush/algorithms/master/algorithms/src/main/java/com/codebreeze/algorithms/DistinctPowers.java">Distinct Powers Solution in Java</a></p>
+</div>
 </div>
                         <aside class="tags fi-pricetag-multiple">Posted on <a href="https://wesamhaboush.github.io/tag/factorization">factorization</a>, <a href="https://wesamhaboush.github.io/tag/perfect-powers"> perfect powers</a>, <a href="https://wesamhaboush.github.io/tag/prime-factorizations"> prime factorizations</a>, <a href="https://wesamhaboush.github.io/tag/distinct-powers"> distinct powers</a>, <a href="https://wesamhaboush.github.io/tag/euler-project-problem-29"> euler project problem 29</a></aside>
             </section>
