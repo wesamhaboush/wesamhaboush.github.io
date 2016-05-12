@@ -6,8 +6,63 @@ I have been lately playing with Project Euler, and I hit problem 29. I had no id
 
 === The Storage Algorithm
 
-To start with, i tried to find a clever solution myself. After few days of trying, i started understanding that i need to simply find the number of bases and powers that are unique, and then remove the duplicates (extra equivalent ones). But how? go google!
+To start with, I tried to find a clever solution myself. After few days of trying, i started understanding that i need to simply find the number of bases and powers that are unique, and then remove the duplicates (extra equivalent ones). But how? go google!
 
 Google told me that everybody seem to give up and use the brute force solution. I am despaired. I do NOT like it. 
 
 After couple of nights and continuous thinking and more importantly someone mentioning represeting unmashable values as vectors of parameters, I thought about representing the unique numbers as ordered pairs.
+
+    what we are trying to do here is to simplify every number to its base a^b, by finding out if a is perfect power,
+    then finding the smallest base and updating the power accordingly, this way we can identify duplicates. For example:
+    9^2 = (3^2)^2 = 3 ^ 4
+    8^2 = (2^3)^2 = 2 ^ 6
+    4^3 = (2^2)^3 = 2 ^ 6
+    you can see that the last two are duplicates, while we did not know that earlier!
+     
+
+[source,java]
+----
+
+    public static long calculateStoreReduced(final long min, final long max)
+    {
+        final Map<Long, Set<Long>> values = new HashMap<>();
+        for(long i = min; i <= max; i++)
+        {
+            final Exponent perfectPower = findPerfectPower(i);
+            if (perfectPower == null) // non perfect powers add unique combinations, so just add them
+            {
+                for (long j = min; j <= max; j++)
+                {
+                    if(values.get(i) == null)
+                    {
+                        values.put(i, new HashSet<>(singleton(j)));
+                    }
+                    else
+                    {
+                        values.get(i).add(j);
+                    }
+                }
+            }
+            else
+            {
+                for (long j = min; j <= max; j++)
+                {
+                    if(values.get(perfectPower.base) == null)
+                    {
+                        values.put(perfectPower.base, new HashSet<>(singleton(j * perfectPower.power)));
+                    }
+                    else
+                    {
+                        values.get(perfectPower.base).add(j * perfectPower.power);
+                    }
+                }
+            }
+        }
+        return values.values() // sets of distinct powers associated with each basic base
+                     .stream()
+                     .mapToInt(Set::size) //count those distinct power set
+                     .sum(); // sum those counts (sizes of power sets)
+    }
+----
+
+=== The Counting Algorithm
