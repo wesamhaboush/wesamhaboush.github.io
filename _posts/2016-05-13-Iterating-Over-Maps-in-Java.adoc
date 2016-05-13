@@ -15,7 +15,7 @@ I appreciate feedback.
 [source,java]
 ----
 	@Test
-    public void testMapIteration2(){
+    public void testMapIteration(){
         //given
         final Map<Integer, String> map = new HashMap<Integer, String>(){{
             put(1, "Java");
@@ -24,16 +24,17 @@ I appreciate feedback.
             put(4, "Clojure");
             put(5, "jRuby");
         }};
-        
         //when
-        final List<String> jvmLangs1 = map.entrySet()
-                                   .stream()
-                                   .map(Map.Entry::getValue)
-                                   .collect(toList());
-        final List<String> jvmLangs2 = map.entrySet()
-                                         .stream()
-                                         .map(Map.Entry::getValue)
-                                         .collect(toCollection(() -> new ArrayList<>()));
+        final List<String> jvmLangs1 = map
+                .entrySet()
+                .stream()
+                .map(Map.Entry::getValue)
+                .collect(toList());
+        final List<String> jvmLangs2 = map
+                .entrySet()
+                .stream()
+                .map(Map.Entry::getValue)
+                .collect(toCollection(() -> new ArrayList<>()));
         //then
         assert jvmLangs1.size() == 5;
         assert jvmLangs2.size() == 5;
