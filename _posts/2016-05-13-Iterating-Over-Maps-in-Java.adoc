@@ -1,0 +1,36 @@
+= Iterating Over Maps in Java
+
+In an article titled https://dzone.com/articles/iterating-java-map-entries[Iterating Java Map Entries], the great John Thompson offers a clean way to iterate over java maps.
+
+I kindly here offer my prefer to how this should be done. I feel that leaking the mutable list out during the iteration might be both conceptually, and practically hazardous. The style below is expression-base, more expressive, less error prone, and fairly concise.
+
+I appreciate feedback.
+
+[source,java]
+----
+	@Test
+    public void testMapIteration2(){
+        //given
+        final Map<Integer, String> map = new HashMap<Integer, String>(){{
+            put(1, "Java");
+            put(2, "Groovy");
+            put(3, "Scala");
+            put(4, "Clojure");
+            put(5, "jRuby");
+        }};
+        
+        //when
+        final List<String> jvmLangs1 = map.entrySet()
+                                   .stream()
+                                   .map(Map.Entry::getValue)
+                                   .collect(toList());
+        final List<String> jvmLangs2 = map.entrySet()
+                                         .stream()
+                                         .map(Map.Entry::getValue)
+                                         .collect(toCollection(() -> new ArrayList<>()));
+        //then
+        assert jvmLangs1.size() == 5;
+        assert jvmLangs2.size() == 5;
+    }
+ ----
+    
