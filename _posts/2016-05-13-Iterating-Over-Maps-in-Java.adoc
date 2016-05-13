@@ -41,3 +41,6 @@ I appreciate feedback.
     }
 ----
     
+Some smart people have actually pointed out that the code above is more obscure than John's. I actually completely agree. However, in real-world code, in my experience, the tables on average are turned. The leaking mutable `List` will cause bugs due to its wider scope. The above code will be a better approach in terms of easier to reason about, read, and maintain code. I guess ultimately there are always trade-offs. If obscurity is big no-no in your context, absolutely prioritize eliminating it.
+
+From a different angle also, the code above is more functional. For each should be for consumers, and NOT mutators. Think IO in the monadic sense. For example, a `System.out::println` or `LOGGER::info` or `DB::persist` are ideal candidates for `forEach` approach. 
