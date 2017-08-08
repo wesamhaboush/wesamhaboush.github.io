@@ -1,0 +1,213 @@
+= Environment Configuration Management in Maven
+
+:Author:    Wesam Haboush
+:Email:     wesam.haboush@gmail.com
+:Date:      2015-10-06
+:hp-tags:   maven, configuration management, deployment
+
+=== The Configuration Management Problem
+
+By default, maven produces artifacts that contain both the resources and the classes, binaries, and static resources.
+
+How to produce artifacts that can be deployed to multiple environments in maven?
+
+Note, all code for this blog can be found at https://github.com/wesamhaboush/configuration-maven-plugin[configuration with maven examples github repo]
+
+=== Potential Solutions
+
+The solutions we explore here work around a scenario that requires:
+
+* A generic mechanism that can be used across many services/apps/projects
+* The outputs of this configuration management scheme or mechanism is a set of packages, some for the binary artifacts (i.e. environment agnostic), and one or more for each environment we intend to deploy the application to.
+
+=== Mechanism 1 : Manual
+
+Create a configuration jar by replacing values manually then running some commands to jar the file. E.g.
+
+[source,bash]
+----
+# for replacement
+$ vim
+$ sed
+
+# for compressing
+$ jar cvf
+$ zip
+$ gzip
+
+# for deploying
+$ mvn deploy:deploy-file [some other params]
+$ curl [some other params]
+----
+
+* Cons:
+
+** does not scale
+** time consuming
+** error prone
+** non-repeatable
+
+* Pros:
+
+** should be considered in exceptional circumstances
+** very flexible
+
+
+=== Mechanism 2: Maven Profiles
+
+Create a profile for each environment, where an ${env} variable is set to control the filtering of resources. Link to example?
+
+* Cons:
+
+** Complex to configure
+** Difficult to maintain
+** Cannot produce all environments with single command
+** Poses many questions with regard to deployment
+** Produces a different artifact depending on the profile chosen, which goes against maven’s intended use of profiles.
+** Does not separate configuration from binaries (unless we complicate the pom even more)
+
+* Pros:
+
+** Profiles are an integral part of maven: no need to introduce new technologies, languages, tools, plugins, etc)
+** Good for environments where build and deployments happen on the same environment for example
+
+=== Mechanism 3: Assembly Descriptor
+
+Create an assembly descriptor for each environment, then associate each of these descriptors in the pom with a filtering location. Link to example?
+
+* Cons:
+
+** Complex to configure
+** Difficult to maintain
+** Cannot produce all environments with single command
+** Poses many questions with regard to deployment
+** Produces a different artifact depending on the profile chosen, which goes against maven’s intended use of profiles.
+** Does not separate configuration from binaries (unless we even more complicate the pom)
+
+* Pros:
+
+** Profiles are an integral part of maven: no need to introduce new technologies, languages, tools, plugins, etc)
+
+=== Mechanism 4: Maven Modules
+
+Essentially create a module per environment, and deploy these. Then retrieve the config and its binary dependencies.
+
+* Cons:
+
+** Seems an overkill if you have many environments
+** Seems to unnecessarily separate configurations from the binaries that will use them. Essentially reversing the normal relationship
+** Difficult to maintain: you have to create a new module environment
+
+* Pros:
+
+** Matches Maven ‘phylosophy’
+** poms are really simple
+** works really well if you have only few environments
+
+=== Mechanism 5: Ant Flexibility From Within Maven
+
+Create an Ant build file that handles resources with its extremely flexible capabilities. Then ensure your pom is pointing to the write places to deploy these ant-produced config packages.
+
+* Cons:
+
+** Uses two build systems instead of one (ant + maven)
+** More difficult to maintain due to needing to keep ant and maven in sync
+
+* Pros:
+
+** very flexible
+** scales really well
+
+Works especially if you do not use maven for deployment.
+
+=== Mechanism 6: Include All Properties and Self-Discover
+
+Include all resources within the main artifact, and make sure the self-discovers which property to use.
+
+* Cons:
+
+** Some organizations perceive risks
+** Deployer needs to know how to facilitate self discovery for the artifact (environment variable must be present for example)
+
+
+* Pros:
+
+** Really Simple, almost trivial
+** Works seemless in Maven
+
+=== Mechanism 7: Maven Classifiers
+
+In this method, the maven classifiers optional attribute is added to some jars in the jar goal. Each classifier would correspond to an environment.
+
+* Cons:
+
+** Not pretty configuration (towards the very verbose when you have many environments)
+** Not easy to maintain (given the verbosity to say the least)
+** Does not scale
+
+Pros:
+
+** Comes with vanilla Maven
+** Easy to manage for a small number of configuration variations
+
+=== Mechanism 8: A Specialist Plugin
+
+Write a plugin to do this job for you. Make sure it has a pattern that suits your needs and then follow it, allowing the plugin to do its work from that.
+
+* Cons:
+
+** Effort to write the code
+** Effort to maintain the code
+
+*Pros:
+
+** You can make the developer’s life really easy, so configuration becomes really simple
+** Really flexible
+** Really scalable
+** Fits maven’s ‘phylosophy’
+
+=== Mechanism 9: Configuration Service
+
+Have a service that is solely responsible for maintaining configurations. You binaries will have no configurations within it, but must retrieve all values from this configuration registry.
+
+* Cons:
+
+** Not all technologies/applications can be bootstrapped easily to even access the repository before some sort of local config is read.
+** It breaks the encapsulation of the code and its configurations (think unit tests, etc)
+** Creates a dependency between all services and the configuration service
+** Not necessarily the simplest design
+
+* Pros:
+
+** Centralizes property control
+** You can tell what is everything configured as querying this service rather than accessing file systems, etc.
+** Makes deploying binaries really easy
+
+Here is some sample code that may help you imagine how such service would be used in practice. In this code, the service is injected into the DAO and used by the DAO:
+
+[source,Java]
+----
+public class LoanDao 
+{
+  @Configurable
+  private final Configuration config;
+      
+  public Loan get(final String id)
+  {
+    final ResultSet resultSet = connectTo(config.get("database.url")).andRunSql(loanWithId(id));
+    return toLoan(resultSet);
+  }
+}
+----
+  
+A type of solution that can be added to this section was mentioned to me by a dear colleague (Eduardo), and that was using LDAP implementations (Active Directory) as properties management system.
+  
+=== Final Notes
+
+* There is almost no right or wrong answer here. For simplicity, you may go for a non-scalable, yet really simple solution. If you need scalability, you might choose to do a more effort, more longevity solution, and so on.
+* Note that profiles can be combined with some of the solutions above to produce builds that produce the main artifact together with a single environment configuration. This works well for organizations that choose to build at deployment time. Something like, get the tag, checkout code, build code, stage binaries and config, then mirror into prod.
+* Unit test resources should be put in the standard src/test/resources folder, and should not ideally need to be filtered.
+* Integration Tests should also use some predefined resources, however, profiles are adequate to handle few variations catering for a handful of testing environments
+* There is complete code for some of the methods above projects on github. Modules, profiles, ant, all, specialist-plugin, and assembly descriptor are all included.
+
+Constructive feedback is welcome.
