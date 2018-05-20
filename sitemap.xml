@@ -3,48 +3,48 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/posts/iterating-over-maps-in-java/</loc>
+    <loc>http://wesamhaboush.github.io/posts/iterating-over-maps-in-java/</loc>
     <lastmod>2016-05-13T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/posts/project-euler-problem-29-distinct-powers/</loc>
+    <loc>http://wesamhaboush.github.io/posts/project-euler-problem-29-distinct-powers/</loc>
     <lastmod>2016-05-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/posts/environment-configuration-management-in-maven/</loc>
+    <loc>http://wesamhaboush.github.io/posts/environment-configuration-management-in-maven/</loc>
     <lastmod>2015-10-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/posts/generic-mapper-for-arrays-in-java/</loc>
+    <loc>http://wesamhaboush.github.io/posts/generic-mapper-for-arrays-in-java/</loc>
     <lastmod>2015-10-07T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/posts/copy-paste-safe-loggers/</loc>
+    <loc>http://wesamhaboush.github.io/posts/copy-paste-safe-loggers/</loc>
     <lastmod>2015-10-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/</loc>
+    <loc>http://wesamhaboush.github.io/</loc>
     <lastmod>2003-12-06T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/</loc>
+    <loc>http://wesamhaboush.github.io/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/posts/</loc>
+    <loc>http://wesamhaboush.github.io/posts/</loc>
     <lastmod>2016-05-13T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/</loc>
+    <loc>http://wesamhaboush.github.io/tags/</loc>
     <priority>0</priority>
   </url>
   
