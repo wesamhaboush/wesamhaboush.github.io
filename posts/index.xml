@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on The Art Of Computer Science</title>
+    <link>/posts/</link>
+    <description>Recent content in Posts on The Art Of Computer Science</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <copyright>Copyright (c) 2018, all rights reserved.</copyright>
+    <lastBuildDate>Fri, 13 May 2016 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Iterating Over Maps in Java</title>
+      <link>/posts/iterating-over-maps-in-java/</link>
+      <pubDate>Fri, 13 May 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/iterating-over-maps-in-java/</guid>
+      <description>In a great article titled Iterating Java Map Entries, the brilliant John Thompson offers a clean way to iterate over java maps.
+ I kindly here offer my own preference on how this should be done, which is only mildly different from John&amp;#8217;s. I feel that leaking the mutable list outside the lambda during the iteration might be both conceptually, and practically hazardous. The style below is expression-base, more expressive, less error prone, and fairly concise.</description>
+    </item>
+    
+    <item>
+      <title>Project Euler Problem 29 : Distinct Powers</title>
+      <link>/posts/project-euler-problem-29-distinct-powers/</link>
+      <pubDate>Thu, 12 May 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/project-euler-problem-29-distinct-powers/</guid>
+      <description>Introduction I have been lately playing with Project Euler, and after few weeks, I hit problem 29. I had no idea how to solve it to start with, but after much thinking, searching, reading, and learning, I made two solutions that are NOT brute force.
+ The problem statement can be found here: Euler Project Problem 29
+ My understanding of the problem and the nature of the project is that we are trying to not use brute force solutions (even if they are feasible), but rather use the problem statements to learn about number theory, and other clever ways to optimize the O(n) of the problem to a minimum in terms of both time and space.</description>
+    </item>
+    
+    <item>
+      <title>Environment Configuration Management in Maven</title>
+      <link>/posts/environment-configuration-management-in-maven/</link>
+      <pubDate>Wed, 07 Oct 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/environment-configuration-management-in-maven/</guid>
+      <description>The Configuration Management Problem By default, maven produces artifacts that contain both the resources and the classes, binaries, and static resources.
+ How to produce artifacts that can be deployed to multiple environments in maven?
+ Note, all code for this blog can be found at configuration with maven examples github repo
+   Potential Solutions The solutions we explore here work around a scenario that requires:
+   A generic mechanism that can be used across many services/apps/projects</description>
+    </item>
+    
+    <item>
+      <title>Generic Mapper for Arrays In Java</title>
+      <link>/posts/generic-mapper-for-arrays-in-java/</link>
+      <pubDate>Wed, 07 Oct 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/generic-mapper-for-arrays-in-java/</guid>
+      <description>What is a Mapper? In functional programming, maps are used to apply a function to each element in a list and return the result list. For example, if you apply the function f(x) = x . x to the list [1, 2, 3], then you get the result list [1,4,9]. We will call a class that does this job in Java an Array or Collection Mapper.
+ In more general terms, functions in the mathematical sense are mappers because they map from one space (input space or domain) to another (output space or domain).</description>
+    </item>
+    
+    <item>
+      <title>Copy/Paste-safe Loggers</title>
+      <link>/posts/copy-paste-safe-loggers/</link>
+      <pubDate>Tue, 06 Oct 2015 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/copy-paste-safe-loggers/</guid>
+      <description>Loggers Problem Developers commonly create loggers for classes by copying logger creation lines from other classes. The process is so repetitive and error-prone that often they forget to update the line to reflect the actual class where the statement was pasted. This is compounded by the fact that IDEs normally auto-import the foreign class. We all saw classes that had the wrong logger like this:
+ public class X { private static final Logger LOG = Logger.</description>
+    </item>
+    
+  </channel>
+</rss>

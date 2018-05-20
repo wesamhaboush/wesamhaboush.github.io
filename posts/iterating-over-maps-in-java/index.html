@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="utf-8" />
+<meta name="author" content="Wesam Haboush" />
+<meta name="description" content="Personal blog." />
+<meta name="keywords" content="blog, tech" />
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.40.3" />
+
+<link rel="canonical" href="/posts/iterating-over-maps-in-java/">
+<base href="/" />
+<meta property="og:title" content="Iterating Over Maps in Java" />
+<meta property="og:description" content="In a great article titled Iterating Java Map Entries, the brilliant John Thompson offers a clean way to iterate over java maps.
+ I kindly here offer my own preference on how this should be done, which is only mildly different from John&#8217;s. I feel that leaking the mutable list outside the lambda during the iteration might be both conceptually, and practically hazardous. The style below is expression-base, more expressive, less error prone, and fairly concise." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/iterating-over-maps-in-java/" />
+
+
+
+<meta property="article:published_time" content="2016-05-13T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2016-05-13T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Iterating Over Maps in Java"/>
+<meta name="twitter:description" content="In a great article titled Iterating Java Map Entries, the brilliant John Thompson offers a clean way to iterate over java maps.
+ I kindly here offer my own preference on how this should be done, which is only mildly different from John&#8217;s. I feel that leaking the mutable list outside the lambda during the iteration might be both conceptually, and practically hazardous. The style below is expression-base, more expressive, less error prone, and fairly concise."/>
+
+
+
+<meta itemprop="name" content="Iterating Over Maps in Java">
+<meta itemprop="description" content="In a great article titled Iterating Java Map Entries, the brilliant John Thompson offers a clean way to iterate over java maps.
+ I kindly here offer my own preference on how this should be done, which is only mildly different from John&#8217;s. I feel that leaking the mutable list outside the lambda during the iteration might be both conceptually, and practically hazardous. The style below is expression-base, more expressive, less error prone, and fairly concise.">
+
+
+<meta itemprop="datePublished" content="2016-05-13T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2016-05-13T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="257">
+
+
+
+<meta itemprop="keywords" content="" />
+
+
+<link rel="stylesheet" href="css/layout.css" />
+<style type="text/css">
+body {
+  background-color: #101010;
+  color: #dbdbdb;
+}
+
+a { color: #dbdbdb; }
+
+pre {
+  background: #1D1F21;
+  border: 1px solid #dbdbdb;
+  border-radius: 5px;
+}
+
+code {
+  background: #1D1F21;
+}
+
+blockquote {
+  background: #1D1F21;
+  border-left: 3px solid #dbdbdb;
+}
+
+table {
+  margin: 1em auto;
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid #dbdbdb;
+}
+
+th {
+  background: #dbdbdb;
+  color: #101010;
+}
+
+.siteTitle a { color: #99cc66; }
+
+.post .content h1{ color: #99cc66; }
+.post .content h2{ color: #99cc66; }
+.post .content h3{ color: #99cc66; }
+.post .content h4{ color: #99cc66; }
+.post .content h5{ color: #99cc66; }
+.post .content h6{ color: #99cc66; }
+.post .content a:hover { color: #99cc66; }
+.social-link:hover { color: #99cc66; }
+.nav-item-title:hover { color: #99cc66; }
+.tag a:hover { color: #99cc66; }
+.copyright { color: #404040 }
+.poweredby { color: #404040 }
+.poweredby a { color: #404040; }
+.post-preview .title a{ color: #99cc66; }
+.content-item a:hover{
+  text-decoration: underline;
+  color: #99cc66;
+}
+.post-list .title { color: #99cc66; }
+.rmore { color: #99cc66; }
+.terms .term a:hover {
+  text-decoration: underline;
+  color: #99cc66;
+}
+
+</style>
+
+
+
+<title>
+
+
+     Iterating Over Maps in Java 
+
+</title>
+
+</head>
+
+
+<body>
+<div class="main">
+<header>
+
+<div class="header-bar">
+
+  <nav>
+    <div class="siteTitle">
+      <a href="/">The Art Of Computer Science</a>
+    </div> 
+
+    
+    
+    <a class="nav-item" href="/posts/"><div class="nav-item-title">Posts</div></a>
+    
+    <a class="nav-item" href="/"><div class="nav-item-title">About Me</div></a>
+    
+
+  </nav>
+</div>
+
+  
+<div class="social-links-header">
+
+  
+  <a href="mailto:wesam.haboush@outlook.com"><div class="social-link">email</div></a>
+  
+
+  
+  <a href="https://github.com/wesamhaboush" target="_blank"><div class="social-link">gh</div></a>
+  
+
+  
+
+  
+
+  
+  <a href="https://www.linkedin.com/in/wesam-haboush-10609b3b" target="_blank"><div class="social-link">in</div></a>
+  
+
+</div>
+
+
+</header>
+
+
+<article class="post">
+    <h1 class="title"> Iterating Over Maps in Java </h1>
+    <div class="content"> <div class="paragraph">
+<p>In a great article titled <a href="https://dzone.com/articles/iterating-java-map-entries">Iterating Java Map Entries</a>, the brilliant John Thompson offers a clean way to iterate over java maps.</p>
+</div>
+<div class="paragraph">
+<p>I kindly here offer my own preference on how this should be done, which is only mildly different from John&#8217;s. I feel that leaking the mutable list outside the lambda during the iteration might be both conceptually, and practically hazardous. The style below is expression-base, more expressive, less error prone, and fairly concise.</p>
+</div>
+<div class="paragraph">
+<p>I appreciate feedback.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java"><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">	<span style="color:#a6e22e">@Test</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">testMapIteration</span><span style="color:#f92672">(){</span>
+        <span style="color:#75715e">//given
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">final</span> Map<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">,</span> String<span style="color:#f92672">&gt;</span> map <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HashMap<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">,</span> String<span style="color:#f92672">&gt;(){{</span>
+            put<span style="color:#f92672">(</span>1<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;Java&#34;</span><span style="color:#f92672">);</span>
+            put<span style="color:#f92672">(</span>2<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;Groovy&#34;</span><span style="color:#f92672">);</span>
+            put<span style="color:#f92672">(</span>3<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;Scala&#34;</span><span style="color:#f92672">);</span>
+            put<span style="color:#f92672">(</span>4<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;Clojure&#34;</span><span style="color:#f92672">);</span>
+            put<span style="color:#f92672">(</span>5<span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;jRuby&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#f92672">}};</span>
+        <span style="color:#75715e">//when
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">final</span> List<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> jvmLangs1 <span style="color:#f92672">=</span> map
+                <span style="color:#f92672">.</span><span style="color:#a6e22e">entrySet</span><span style="color:#f92672">()</span>
+                <span style="color:#f92672">.</span><span style="color:#a6e22e">stream</span><span style="color:#f92672">()</span>
+                <span style="color:#f92672">.</span><span style="color:#a6e22e">map</span><span style="color:#f92672">(</span>Map<span style="color:#f92672">.</span><span style="color:#a6e22e">Entry</span><span style="color:#f92672">::</span>getValue<span style="color:#f92672">)</span>
+                <span style="color:#f92672">.</span><span style="color:#a6e22e">collect</span><span style="color:#f92672">(</span>toList<span style="color:#f92672">());</span>
+        <span style="color:#66d9ef">final</span> List<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> jvmLangs2 <span style="color:#f92672">=</span> map
+                <span style="color:#f92672">.</span><span style="color:#a6e22e">entrySet</span><span style="color:#f92672">()</span>
+                <span style="color:#f92672">.</span><span style="color:#a6e22e">stream</span><span style="color:#f92672">()</span>
+                <span style="color:#f92672">.</span><span style="color:#a6e22e">map</span><span style="color:#f92672">(</span>Map<span style="color:#f92672">.</span><span style="color:#a6e22e">Entry</span><span style="color:#f92672">::</span>getValue<span style="color:#f92672">)</span>
+                <span style="color:#f92672">.</span><span style="color:#a6e22e">collect</span><span style="color:#f92672">(</span>toCollection<span style="color:#f92672">(()</span> <span style="color:#f92672">-&gt;</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;&gt;()));</span>
+        <span style="color:#75715e">//then
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">assert</span> jvmLangs1<span style="color:#f92672">.</span><span style="color:#a6e22e">size</span><span style="color:#f92672">()</span> <span style="color:#f92672">==</span> 5<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">assert</span> jvmLangs2<span style="color:#f92672">.</span><span style="color:#a6e22e">size</span><span style="color:#f92672">()</span> <span style="color:#f92672">==</span> 5<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span></code></pre></div></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Some smart people have actually pointed out that the code above is more obscure than John&#8217;s. I actually completely agree. However, in real-world code, in my experience, the tables on average are turned. The leaking mutable <code>List</code> will cause bugs due to its wider scope. The above code will be a better approach in terms of easier to reason about, read, and maintain code. I guess ultimately there are always trade-offs. If obscurity is big no-no in your context, absolutely prioritize eliminating it.</p>
+</div>
+<div class="paragraph">
+<p>From a different angle also, the code above is more functional. For each should be for consumers, and NOT mutators. Think IO in the monadic sense. For example, a <code>System.out::println</code> or <code>LOGGER::info</code> or <code>DB::persist</code> are ideal candidates for <code>forEach</code> approach.</p>
+</div>
+ </div>
+    <footer class="post-footer">
+
+  <div class="post-footer-data">
+    
+<div class="tags">
+    
+</div>
+
+    <div class="date"> May 13, 2016 </div>
+  </div>
+
+</footer>
+
+
+
+</article>
+
+  <footer>
+
+  <div class="social-links-footer">
+
+  
+  <a href="mailto:wesam.haboush@outlook.com"><div class="social-link">Email</div></a>
+  
+
+  
+  <a href="https://github.com/wesamhaboush" target="_blank"><div class="social-link">GitHub</div></a>
+  
+
+  
+
+  
+
+  
+  <a href="https://www.linkedin.com/in/wesam-haboush-10609b3b" target="_blank"><div class="social-link">LinkedIn</div></a>
+  
+
+  <div class="social-link">
+  <a href="/index.xml" target="_blank">RSS</a>
+  </div>
+
+</div>
+
+
+  <div class="copyright"> Copyright (c) 2018, all rights reserved. </div>
+
+  <div class="poweredby">
+    Powered by <a href="https://gohugo.io/">Hugo</a>.
+  </div>
+
+  </footer>
+
+</div> 
+
+</body>
+</html>
+

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+<meta charset="utf-8" />
+<meta name="author" content="Wesam Haboush" />
+<meta name="description" content="Personal blog." />
+<meta name="keywords" content="blog, tech" />
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.40.3" />
+
+<link rel="canonical" href="/posts/project-euler-problem-29-distinct-powers/">
+<base href="/" />
+<meta property="og:title" content="Project Euler Problem 29 : Distinct Powers" />
+<meta property="og:description" content="Introduction I have been lately playing with Project Euler, and after few weeks, I hit problem 29. I had no idea how to solve it to start with, but after much thinking, searching, reading, and learning, I made two solutions that are NOT brute force.
+ The problem statement can be found here: Euler Project Problem 29
+ My understanding of the problem and the nature of the project is that we are trying to not use brute force solutions (even if they are feasible), but rather use the problem statements to learn about number theory, and other clever ways to optimize the O(n) of the problem to a minimum in terms of both time and space." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/project-euler-problem-29-distinct-powers/" />
+
+
+
+<meta property="article:published_time" content="2016-05-12T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2016-05-12T00:00:00&#43;00:00"/>
+
+
+
+
+
+
+
+
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Project Euler Problem 29 : Distinct Powers"/>
+<meta name="twitter:description" content="Introduction I have been lately playing with Project Euler, and after few weeks, I hit problem 29. I had no idea how to solve it to start with, but after much thinking, searching, reading, and learning, I made two solutions that are NOT brute force.
+ The problem statement can be found here: Euler Project Problem 29
+ My understanding of the problem and the nature of the project is that we are trying to not use brute force solutions (even if they are feasible), but rather use the problem statements to learn about number theory, and other clever ways to optimize the O(n) of the problem to a minimum in terms of both time and space."/>
+
+
+
+<meta itemprop="name" content="Project Euler Problem 29 : Distinct Powers">
+<meta itemprop="description" content="Introduction I have been lately playing with Project Euler, and after few weeks, I hit problem 29. I had no idea how to solve it to start with, but after much thinking, searching, reading, and learning, I made two solutions that are NOT brute force.
+ The problem statement can be found here: Euler Project Problem 29
+ My understanding of the problem and the nature of the project is that we are trying to not use brute force solutions (even if they are feasible), but rather use the problem statements to learn about number theory, and other clever ways to optimize the O(n) of the problem to a minimum in terms of both time and space.">
+
+
+<meta itemprop="datePublished" content="2016-05-12T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2016-05-12T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1642">
+
+
+
+<meta itemprop="keywords" content="" />
+
+
+<link rel="stylesheet" href="css/layout.css" />
+<style type="text/css">
+body {
+  background-color: #101010;
+  color: #dbdbdb;
+}
+
+a { color: #dbdbdb; }
+
+pre {
+  background: #1D1F21;
+  border: 1px solid #dbdbdb;
+  border-radius: 5px;
+}
+
+code {
+  background: #1D1F21;
+}
+
+blockquote {
+  background: #1D1F21;
+  border-left: 3px solid #dbdbdb;
+}
+
+table {
+  margin: 1em auto;
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid #dbdbdb;
+}
+
+th {
+  background: #dbdbdb;
+  color: #101010;
+}
+
+.siteTitle a { color: #99cc66; }
+
+.post .content h1{ color: #99cc66; }
+.post .content h2{ color: #99cc66; }
+.post .content h3{ color: #99cc66; }
+.post .content h4{ color: #99cc66; }
+.post .content h5{ color: #99cc66; }
+.post .content h6{ color: #99cc66; }
+.post .content a:hover { color: #99cc66; }
+.social-link:hover { color: #99cc66; }
+.nav-item-title:hover { color: #99cc66; }
+.tag a:hover { color: #99cc66; }
+.copyright { color: #404040 }
+.poweredby { color: #404040 }
+.poweredby a { color: #404040; }
+.post-preview .title a{ color: #99cc66; }
+.content-item a:hover{
+  text-decoration: underline;
+  color: #99cc66;
+}
+.post-list .title { color: #99cc66; }
+.rmore { color: #99cc66; }
+.terms .term a:hover {
+  text-decoration: underline;
+  color: #99cc66;
+}
+
+</style>
+
+
+
+<title>
+
+
+     Project Euler Problem 29 : Distinct Powers 
+
+</title>
+
+</head>
+
+
+<body>
+<div class="main">
+<header>
+
+<div class="header-bar">
+
+  <nav>
+    <div class="siteTitle">
+      <a href="/">The Art Of Computer Science</a>
+    </div> 
+
+    
+    
+    <a class="nav-item" href="/posts/"><div class="nav-item-title">Posts</div></a>
+    
+    <a class="nav-item" href="/"><div class="nav-item-title">About Me</div></a>
+    
+
+  </nav>
+</div>
+
+  
+<div class="social-links-header">
+
+  
+  <a href="mailto:wesam.haboush@outlook.com"><div class="social-link">email</div></a>
+  
+
+  
+  <a href="https://github.com/wesamhaboush" target="_blank"><div class="social-link">gh</div></a>
+  
+
+  
+
+  
+
+  
+  <a href="https://www.linkedin.com/in/wesam-haboush-10609b3b" target="_blank"><div class="social-link">in</div></a>
+  
+
+</div>
+
+
+</header>
+
+
+<article class="post">
+    <h1 class="title"> Project Euler Problem 29 : Distinct Powers </h1>
+    <div class="content"> <div class="sect1">
+<h2 id="_introduction">Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>I have been lately playing with Project Euler, and after few weeks, I hit problem 29. I had no idea how to solve it to start with, but after much thinking, searching, reading, and learning, I made two solutions that are NOT brute force.</p>
+</div>
+<div class="paragraph">
+<p>The problem statement can be found here: <a href="https://projecteuler.net/problem=29">Euler Project Problem 29</a></p>
+</div>
+<div class="paragraph">
+<p>My understanding of the problem and the nature of the project is that we are trying to not use brute force solutions (even if they are feasible), but rather use the problem statements to learn about number theory, and other clever ways to optimize the <code>O(n)</code> of the problem to a minimum in terms of both time and space.</p>
+</div>
+<div class="paragraph">
+<p>To start with, I tried to find a clever solution myself. After few days of trying, I started focusing on the basic solution strategy: simply find the number of bases and powers that are a unique combination, i.e. all unique <code>(a,b)</code> ordered pairs, and then remove the duplicates (extra equivalent ones). But how? go google-anza!</p>
+</div>
+<div class="paragraph">
+<p>Google told me that everybody seem to give up and use the brute force solution. I am despaired. I do NOT like it.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_storage_algorithm">The Storage Algorithm</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>After couple of nights and continuous thinking and more importantly someone mentioning represeting unmashable values as vectors of parameters - i.e. do not calculate <code>100^100</code>, just deal with it as <code>(100,100)</code>, I thought about representing the unique base-power combinations as ordered pairs.</p>
+</div>
+<div class="paragraph">
+<p>I also understood from my research that all numbers can be simplified to a basic base and power combinations form. For example, <code>2^3</code> cannot be simplified any further, but <code>4^9</code> can be simplified into <code>2^18</code>, also <code>9^10</code> to <code>3^20</code>, etc. So those combinations are equivalent or duplicates- e.g. <code>(9,10)</code> and <code>(3,20)</code>.</p>
+</div>
+<div class="paragraph">
+<p>Next, I learnt that there are two types of base a in the <code>(a,b)</code> combinations: 1) perfect powers 2) non-perfect powers. For non-perfect powers, they cannot be simplified any further. Non-perfect power are numbers that cannot be expressed as <code>x^z</code>, e.g. <code>6</code>, <code>13</code>, <code>18</code>. On the other hand, perfect powers bases can be, e.g. <code>9 = 3^2</code>, <code>1000 = 10^3</code>, <code>64 = 4^4</code>. How does this help? ok, so it turns out that combinations that are made of non-perfect power a&#8217;s are non-decomposable or are irreduceable, i.e., we need not process them, just use them as is. For ordered pairs with perfect power as, you need to find <code>x</code> and <code>y</code>, where <code>x^y = a</code>.</p>
+</div>
+<div class="paragraph">
+<p>Note, that perfect numbers are far inbetween, therefore processing them is not an <code>O(n)</code> situation.</p>
+</div>
+<div class="paragraph">
+<p>So, the next step is storing all the unique items in a data structure. I decided to use a map of bases to their associated powers, instead of a set of ordered pairs, although both would work and effectively fulfill the <code>Set</code> semantics. The reason is that this will reduce storage space. So in stead of the memory holding: <code>(2,2),(2,3),(2,4)</code>, it holds <code>(2,(2,3,4))</code>.</p>
+</div>
+<div class="paragraph">
+<p>So, finally what is the complexity of the unique values storage algorithm? the high level algorithm works out <code>O(n^2)</code>, however, we never have to calculate any large powers, and also this solution is generic and should work with larger values from those requested in Project Euler Problem 29.</p>
+</div>
+<div class="paragraph">
+<p>Here is the pseudo code of the algorithm, followed by a java implementation:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>distinct-powers(min, max)
+  set = []
+  for base in min to max
+      if base is perfect power
+          reduced-base, additional-power = reduce(base)
+          for power in min to max
+              set = set + (reduced-base, power * additional-power)
+      else
+          for power in min to max
+              set = set + (base, power)
+  return size-of set</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>What we are trying to do here is to simplify every number to its base <code>a^b</code>, by finding out if a is perfect power, then finding the smallest base and updating the power accordingly, this way we can identify duplicates. For example:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>9^2 = (3^2)^2 = 3 ^ 4
+8^2 = (2^3)^2 = 2 ^ 6
+4^3 = (2^2)^3 = 2 ^ 6</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>you can see that the last two are duplicates, while we did not know that earlier!</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java"><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">long</span> <span style="color:#a6e22e">calculateStoreReduced</span><span style="color:#f92672">(</span><span style="color:#66d9ef">final</span> <span style="color:#66d9ef">long</span> min<span style="color:#f92672">,</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">long</span> max<span style="color:#f92672">)</span>
+    <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">final</span> Map<span style="color:#f92672">&lt;</span>Long<span style="color:#f92672">,</span> Set<span style="color:#f92672">&lt;</span>Long<span style="color:#f92672">&gt;&gt;</span> values <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> HashMap<span style="color:#f92672">&lt;&gt;();</span>
+        <span style="color:#66d9ef">for</span><span style="color:#f92672">(</span><span style="color:#66d9ef">long</span> i <span style="color:#f92672">=</span> min<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;=</span> max<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span>
+        <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">final</span> Exponent perfectPower <span style="color:#f92672">=</span> findPerfectPower<span style="color:#f92672">(</span>i<span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>perfectPower <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#75715e">// non perfect powers add unique combinations, so just add them
+</span><span style="color:#75715e"></span>            <span style="color:#f92672">{</span>
+                <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">long</span> j <span style="color:#f92672">=</span> min<span style="color:#f92672">;</span> j <span style="color:#f92672">&lt;=</span> max<span style="color:#f92672">;</span> j<span style="color:#f92672">++)</span>
+                <span style="color:#f92672">{</span>
+                    <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>values<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>i<span style="color:#f92672">)</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+                    <span style="color:#f92672">{</span>
+                        values<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span>i<span style="color:#f92672">,</span> <span style="color:#66d9ef">new</span> HashSet<span style="color:#f92672">&lt;&gt;(</span>singleton<span style="color:#f92672">(</span>j<span style="color:#f92672">)));</span>
+                    <span style="color:#f92672">}</span>
+                    <span style="color:#66d9ef">else</span>
+                    <span style="color:#f92672">{</span>
+                        values<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>i<span style="color:#f92672">).</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>j<span style="color:#f92672">);</span>
+                    <span style="color:#f92672">}</span>
+                <span style="color:#f92672">}</span>
+            <span style="color:#f92672">}</span>
+            <span style="color:#66d9ef">else</span>
+            <span style="color:#f92672">{</span>
+                <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">long</span> j <span style="color:#f92672">=</span> min<span style="color:#f92672">;</span> j <span style="color:#f92672">&lt;=</span> max<span style="color:#f92672">;</span> j<span style="color:#f92672">++)</span>
+                <span style="color:#f92672">{</span>
+                    <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>values<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>perfectPower<span style="color:#f92672">.</span><span style="color:#a6e22e">base</span><span style="color:#f92672">)</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+                    <span style="color:#f92672">{</span>
+                        values<span style="color:#f92672">.</span><span style="color:#a6e22e">put</span><span style="color:#f92672">(</span>perfectPower<span style="color:#f92672">.</span><span style="color:#a6e22e">base</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">new</span> HashSet<span style="color:#f92672">&lt;&gt;(</span>singleton<span style="color:#f92672">(</span>j <span style="color:#f92672">*</span> perfectPower<span style="color:#f92672">.</span><span style="color:#a6e22e">power</span><span style="color:#f92672">)));</span>
+                    <span style="color:#f92672">}</span>
+                    <span style="color:#66d9ef">else</span>
+                    <span style="color:#f92672">{</span>
+                        values<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>perfectPower<span style="color:#f92672">.</span><span style="color:#a6e22e">base</span><span style="color:#f92672">).</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>j <span style="color:#f92672">*</span> perfectPower<span style="color:#f92672">.</span><span style="color:#a6e22e">power</span><span style="color:#f92672">);</span>
+                    <span style="color:#f92672">}</span>
+                <span style="color:#f92672">}</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">return</span> values<span style="color:#f92672">.</span><span style="color:#a6e22e">values</span><span style="color:#f92672">()</span> <span style="color:#75715e">// sets of distinct powers associated with each basic base
+</span><span style="color:#75715e"></span>                     <span style="color:#f92672">.</span><span style="color:#a6e22e">stream</span><span style="color:#f92672">()</span>
+                     <span style="color:#f92672">.</span><span style="color:#a6e22e">mapToInt</span><span style="color:#f92672">(</span>Set:<span style="color:#f92672">:</span>size<span style="color:#f92672">)</span> <span style="color:#75715e">//count those distinct power set
+</span><span style="color:#75715e"></span>                     <span style="color:#f92672">.</span><span style="color:#a6e22e">sum</span><span style="color:#f92672">();</span> <span style="color:#75715e">// sum those counts (sizes of power sets)
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span></code></pre></div></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, this code took less than 100ms to find the correct answer to euler&#8217;s problem 29.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_counting_algorithm">The Counting Algorithm</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Having produced the set solution above, I was fairly satisfied with a non brute force solution, but I still really was itching to get another solution strategy working. I wanted to be able to count and identify duplicates, without storing all the combinations. I have read on some threads that you can actually count the duplicates by hand, and give the answer to euler&#8217;s project. However, I felt I would like to be able to give a more generic solution, and computerize the process. I set out to do exactly that. It was not easy, but i think i got there.</p>
+</div>
+<div class="paragraph">
+<p>OK, so how do we count duplicates basically goes like that: we assume no duplicates, and find the number of all possible combinations <code>(min - max + 1)^2</code>, then we take out from that number, all the repeats that we identify by iterating through the combinations.</p>
+</div>
+<div class="paragraph">
+<p>Here is a pseudocode, followed by a java implementation too:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>distinct-powers(min, max)
+       max-count = square (max - min + 1)
+       repeat-count = 0
+       for base in min to max
+       	if base is perfect power
+           	reduced-base, additional-power = reduce(base)
+               for power in min to max
+                   new-power = power * additional-power
+                   if new-power &lt;= max
+                       repeat-count = repeat-count + 1
+                   else
+                       x, y = find divisors of new-power such that x &lt; power and y between min and max
+                       if exist x, y
+                           repeat-count = repeat-count + 1
+        return max-count - repeat-count</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-java" data-lang="java"><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">long</span> <span style="color:#a6e22e">calculateCounting</span><span style="color:#f92672">(</span><span style="color:#66d9ef">final</span> <span style="color:#66d9ef">long</span> min<span style="color:#f92672">,</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">long</span> max<span style="color:#f92672">)</span>
+    <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">long</span> count <span style="color:#f92672">=</span> <span style="color:#f92672">(</span>max <span style="color:#f92672">-</span> min <span style="color:#f92672">+</span> 1<span style="color:#f92672">)</span> <span style="color:#f92672">*</span> <span style="color:#f92672">(</span>max <span style="color:#f92672">-</span> min <span style="color:#f92672">+</span> 1<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">long</span> repeats <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span>
+        <span style="color:#66d9ef">for</span><span style="color:#f92672">(</span><span style="color:#66d9ef">long</span> i <span style="color:#f92672">=</span> min<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;=</span> max<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span>
+        <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">final</span> Exponent perfectPower <span style="color:#f92672">=</span> findPerfectPower<span style="color:#f92672">(</span>i<span style="color:#f92672">);</span>
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>perfectPower <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#75715e">// non perfect powers add unique combinations, so just add them
+</span><span style="color:#75715e"></span>            <span style="color:#f92672">{</span>
+                <span style="color:#75715e">//nothing to do, cz non perfect power cannot generate duplicates.
+</span><span style="color:#75715e"></span>            <span style="color:#f92672">}</span>
+            <span style="color:#66d9ef">else</span>
+            <span style="color:#f92672">{</span>
+                <span style="color:#66d9ef">for</span><span style="color:#f92672">(</span><span style="color:#66d9ef">long</span> j <span style="color:#f92672">=</span> min<span style="color:#f92672">;</span> j <span style="color:#f92672">&lt;</span> max<span style="color:#f92672">;</span> j<span style="color:#f92672">++)</span>
+                <span style="color:#f92672">{</span>
+                    <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">long</span> reducedCandidateB <span style="color:#f92672">=</span> perfectPower<span style="color:#f92672">.</span><span style="color:#a6e22e">power</span> <span style="color:#f92672">*</span> j<span style="color:#f92672">;</span>
+                    <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>reducedCandidateB <span style="color:#f92672">&lt;=</span> max<span style="color:#f92672">)</span>
+                    <span style="color:#f92672">{</span>
+                        <span style="color:#75715e">//this is the simple case of: a^b = c^d^e = c^(d*e), where d * e &lt; max
+</span><span style="color:#75715e"></span>                        <span style="color:#75715e">//this is always a repeat with c^ whatever.
+</span><span style="color:#75715e"></span>                        repeats<span style="color:#f92672">++;</span>
+                    <span style="color:#f92672">}</span>
+                    <span style="color:#66d9ef">else</span>
+                    <span style="color:#f92672">{</span>
+                        <span style="color:#75715e">//we want to find if this perfect power number i^j can be decomposed to another perfect power before it, focus on before it, i.e. a &lt; current a
+</span><span style="color:#75715e"></span>                        <span style="color:#75715e">//if yes, then it is a repeat of that number. For example:
+</span><span style="color:#75715e"></span>                        <span style="color:#75715e">//when min,max = 2,8   then 4^6 and 8^4 are equivalent, but neither are a repeat of 2^12, because 12 is greater than the max 8
+</span><span style="color:#75715e"></span>                        <span style="color:#75715e">//so when we hit 4^6, it is decomposed into 2^2^6 = 2^12. Now, can we decompose it to a^b such that a &lt; 4, i.e. current a,
+</span><span style="color:#75715e"></span>                        <span style="color:#75715e">//and with both b &lt; max and &gt; min? the answer is no (i tried and failed). so 4^6 is NOT a repeat.
+</span><span style="color:#75715e"></span>                        <span style="color:#75715e">//however, once we hit 8^4 = 2^3^4 = 2^12, we ask the same question, can we find 8^4 = a^b, such that a &lt; 8 and &gt; min,
+</span><span style="color:#75715e"></span>                        <span style="color:#75715e">// and b &lt; max and b &gt; min? the answer is yes. With 2^12, we can find divisors of 12 = 2, 3, 4, 6, 12, then try each as follows:
+</span><span style="color:#75715e"></span>                        <span style="color:#75715e">// b = 12/12 = 1 =&gt; fails cz b is less than minimum
+</span><span style="color:#75715e"></span>                        <span style="color:#75715e">// b = 12/6  = 2 =&gt; fails cz 6 is greater than 3 (the current decomposed power), which means it is not before it
+</span><span style="color:#75715e"></span>                        <span style="color:#75715e">// b = 12/4 = 3  =&gt; fails cz 4 is greater than 3 (the current decomposed power), which means it is not before it
+</span><span style="color:#75715e"></span>                        <span style="color:#75715e">// b = 12/3 = 4  =&gt; fails cz 3 is equal to 3 (the power we decomposed the current a, which is 8, to)
+</span><span style="color:#75715e"></span>                        <span style="color:#75715e">// b = 12/2 = 6  =&gt; succeeds cz 2 is less than 3 (so the base is another base before the current base), AND 6, which is b, is &gt; min and &lt; max.
+</span><span style="color:#75715e"></span>                        <span style="color:#75715e">// This indicates 8^4 is a repeat
+</span><span style="color:#75715e"></span>                        <span style="color:#75715e">// so, let&#39;s implement that
+</span><span style="color:#75715e"></span>                        <span style="color:#66d9ef">final</span> Set<span style="color:#f92672">&lt;</span>Long<span style="color:#f92672">&gt;</span> candidateBDivisors <span style="color:#f92672">=</span> divisorsOf<span style="color:#f92672">(</span>reducedCandidateB<span style="color:#f92672">,</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">,</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">);</span>
+                        <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">boolean</span> isRepeatOfSomethingNonBasicBefore <span style="color:#f92672">=</span> candidateBDivisors
+                                <span style="color:#f92672">.</span><span style="color:#a6e22e">stream</span><span style="color:#f92672">()</span>
+                                <span style="color:#f92672">.</span><span style="color:#a6e22e">filter</span><span style="color:#f92672">(</span>divisor <span style="color:#f92672">-&gt;</span> divisor <span style="color:#f92672">&lt;</span> perfectPower<span style="color:#f92672">.</span><span style="color:#a6e22e">power</span><span style="color:#f92672">)</span>
+                                <span style="color:#f92672">.</span><span style="color:#a6e22e">anyMatch</span><span style="color:#f92672">(</span>divisor <span style="color:#f92672">-&gt;</span> <span style="color:#f92672">{</span>
+                                    <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">long</span> newB <span style="color:#f92672">=</span> reducedCandidateB <span style="color:#f92672">/</span> divisor<span style="color:#f92672">;</span>
+                                    <span style="color:#66d9ef">return</span> newB <span style="color:#f92672">&gt;=</span> min <span style="color:#f92672">&amp;&amp;</span> newB <span style="color:#f92672">&lt;=</span> max<span style="color:#f92672">;</span>
+                                <span style="color:#f92672">});</span>
+                        <span style="color:#66d9ef">if</span><span style="color:#f92672">(</span>isRepeatOfSomethingNonBasicBefore<span style="color:#f92672">)</span>
+                        <span style="color:#f92672">{</span>
+                            repeats<span style="color:#f92672">++;</span>
+                        <span style="color:#f92672">}</span>
+                    <span style="color:#f92672">}</span>
+                <span style="color:#f92672">}</span>
+            <span style="color:#f92672">}</span>
+        <span style="color:#f92672">}</span>
+        <span style="color:#66d9ef">return</span> count <span style="color:#f92672">-</span> repeats<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span></code></pre></div></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This solution also gives the same results as the previous one, but does not use any memory at all, it does not compute any power values, and also runs in <code>O(n^2)</code> time complexity.</p>
+</div>
+<div class="paragraph">
+<p>I am more satisfied now having produced two non-brute force solutions, and having learnt so much about number theory that I did not know. Having said that, I cannot help but think, can we do better? can we do something with a <code>O(n)</code> time complexity? I am happy to be given pointers!</p>
+</div>
+<div class="paragraph">
+<p>Finally, here is a link to the code on my github account</p>
+</div>
+<div class="paragraph">
+<p><a href="https://raw.githubusercontent.com/wesamhaboush/algorithms/master/algorithms/src/main/java/com/codebreeze/algorithms/DistinctPowers.java">Distinct Powers Solution in Java</a></p>
+</div>
+</div>
+</div>
+ </div>
+    <footer class="post-footer">
+
+  <div class="post-footer-data">
+    
+<div class="tags">
+    
+</div>
+
+    <div class="date"> May 12, 2016 </div>
+  </div>
+
+</footer>
+
+
+
+</article>
+
+  <footer>
+
+  <div class="social-links-footer">
+
+  
+  <a href="mailto:wesam.haboush@outlook.com"><div class="social-link">Email</div></a>
+  
+
+  
+  <a href="https://github.com/wesamhaboush" target="_blank"><div class="social-link">GitHub</div></a>
+  
+
+  
+
+  
+
+  
+  <a href="https://www.linkedin.com/in/wesam-haboush-10609b3b" target="_blank"><div class="social-link">LinkedIn</div></a>
+  
+
+  <div class="social-link">
+  <a href="/index.xml" target="_blank">RSS</a>
+  </div>
+
+</div>
+
+
+  <div class="copyright"> Copyright (c) 2018, all rights reserved. </div>
+
+  <div class="poweredby">
+    Powered by <a href="https://gohugo.io/">Hugo</a>.
+  </div>
+
+  </footer>
+
+</div> 
+
+</body>
+</html>
+
