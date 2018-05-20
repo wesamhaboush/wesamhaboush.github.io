@@ -13,6 +13,17 @@
     
     
     <item>
+      <title>Problem 56 : Powerful Digit Sum</title>
+      <link>http://wesamhaboush.github.io/posts/problem-56-powerful-digit-sum/</link>
+      <pubDate>Sun, 20 May 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://wesamhaboush.github.io/posts/problem-56-powerful-digit-sum/</guid>
+      <description>Introduction Let&amp;#8217;s start with a link to the problem: Euler Project Problem 56.
+ The problem had been solved many times using a bruteforce approach, or an analytical approach that uses some estimation to zoom on the range of values to search for the max.
+ I present here a kotlin implementation with an optimization approach that minimizes the search space considerably and allows to find the solution for theoritically any arbitrary base and exponent values.</description>
+    </item>
+    
+    <item>
       <title>Iterating Over Maps in Java</title>
       <link>http://wesamhaboush.github.io/posts/iterating-over-maps-in-java/</link>
       <pubDate>Fri, 13 May 2016 00:00:00 +0000</pubDate>
